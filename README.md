@@ -1,1 +1,2 @@
-# HRMS-Project
+# HRMS
+Customizable Human Resource Management System
