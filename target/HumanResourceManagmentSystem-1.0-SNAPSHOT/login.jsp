@@ -17,11 +17,21 @@
 <div class="container">
     <div class="login-content">
         <form action="login" method="post" autocomplete="off">
-                <%
-                String result= (String) request.getAttribute("login");;%>
+            <%
+                String result= (String) request.getAttribute("login");
+                String expired= (String) request.getAttribute("session");%>
+
             <img src="img/avatar.svg">
             <h2 class="title">Human Resource Management System</h2>
-
+            <%
+                if(expired=="Expired"){%>
+            <h4 class="response" style="color: #000000; background-color: #d85757; transition: 600ms">
+                Session Expired! Please Login!
+            </h4>
+            <br>
+            <%}else{%>
+            <% }
+                %>
             <div class="input-div one">
                 <div class="i">
                     <i class="fas fa-user"></i>

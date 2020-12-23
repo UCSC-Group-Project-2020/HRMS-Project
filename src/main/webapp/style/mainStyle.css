@@ -39,6 +39,7 @@ body{
     color: #ffffff;
     padding: 10px 10px 10px 0px;
     text-align: center;
+    text-align: center;
 
 }
 .head a{
@@ -188,7 +189,6 @@ h1{
 span{
     color: #052841;
     text-decoration: none;
-    width: 100%;
 }
 .menu a:hover {
     background-image: linear-gradient(to left, #000, #041d3c, #0c3b60);

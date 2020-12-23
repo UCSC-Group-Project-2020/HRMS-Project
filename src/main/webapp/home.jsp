@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="style/mainStyle.css">
     <link rel="icon" href="img/logo.png" sizes="25x25" type="image/png">
     <link rel="stylesheet" href="style/home.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -25,17 +26,24 @@
     <div class="heading">
         <h3>InfoCorner</h3>
     </div>
+    <%HttpSession sss = request.getSession(false);
+        if (sss == null || sss.isNew()) {
+            request.setAttribute("session", "Expired");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }%>
+    
     <%if(session.getAttribute("postView").equals(0)){%>
 
     <img class="noPostImg" src="img/noPost.jpg" />
 
     <%}else{%>
     <form method="POST" action="home.jsp">
-        <div class="post">
+        <div class="post" id="m">
 
             <table id="post_table">
                 <%
                     ResultSet rs= null;
+                    int c=0;
                     try
                     {
                         Connection con = DBconn.getConnection();
@@ -45,19 +53,20 @@
                         while(rs.next()){
                             String pId = rs.getString("postId");
                             int count = rs.getInt("postImage");
+                            c++;
                 %>
                 <tr>
-                    <tr>
-                        <th class="name"><%=rs.getString("firstName")%> <%=rs.getString("lastName")%></th>
-                    </tr>
-                    <tr>
-                        <td class="date"><%=rs.getString("dateTime")%></td>
-                    </tr>
-                    <tr>
-                         <td class="des"><%=rs.getString("postText")%></td>
-                    </tr >
-                    <tr>
-                         <%
+                <tr>
+                    <th class="name"><%=rs.getString("firstName")%> <%=rs.getString("lastName")%></th>
+                </tr>
+                <tr>
+                    <td class="date"><%=rs.getString("dateTime")%></td>
+                </tr>
+                <tr>
+                    <td class="des"><%=rs.getString("postText")%></td>
+                </tr >
+                <tr>
+                        <%
             String imgs[] = new String[count];
             Blob img;
             int a=0;
@@ -83,36 +92,57 @@
             }
             if(count%2==0){
                 for(int j=0;j<count;j=j+2){%>
-                        <tr>
-                            <th class="image">
-                                <img class="imgL" src="data:image/jpg;base64,<%=imgs[j]%>" />
-                                <img class="imgR" src="data:image/jpg;base64,<%=imgs[j+1]%>"/>
-                            </th>
-                        </tr>
-                            <%}}
-                            else{%>
-                        <tr>
-                            <th class="image"><img class="singleImg" src="data:image/jpg;base64,<%=imgs[0]%>"/></th>
-                        </tr>
-                        <%for(int j=1;j<count;j=j+2){%>
-                        <tr>
-                            <th class="image">
-                                <img class="imgL" src="data:image/jpg;base64,<%=imgs[j]%>"/>
-                                <img class="imgR" src="data:image/jpg;base64,<%=imgs[j+1]%>"/>
-                            </th>
-                        </tr>
-                        <%}}}}catch (SQLException e){e.printStackTrace();}%>
-                    </tr>
+                <tr>
+                    <th class="image">
+                        <img id="img<%=c%><%=j%>" class="imgL" src="data:image/jpg;base64,<%=imgs[j]%>" onclick="zoomImg(this.id)"/>
+                        <img id="img<%=c%><%=(j+1)%>" class="imgR" src="data:image/jpg;base64,<%=imgs[j+1]%>" onclick="zoomImg(this.id)"/>
+                    </th>
+                </tr>
+                <%}}
+                else{%>
+                <tr>
+                    <th class="image"><img id="img<%=c%><%=0%>" class="singleImg" src="data:image/jpg;base64,<%=imgs[0]%>" onclick="zoomImg(this.id)"/></th>
+                </tr>
+                <%for(int j=1;j<count;j=j+2){%>
+                <tr>
+                    <th class="image">
+                        <img id="img<%=c%><%=j%>" class="imgL" src="data:image/jpg;base64,<%=imgs[j]%>" onclick="zoomImg(this.id)"/>
+                        <img id="img<%=c%><%=(j+1)%>" class="imgR" src="data:image/jpg;base64,<%=imgs[j+1]%>" onclick="zoomImg(this.id)"/>
+                    </th>
+                </tr>
+                <%}}}}catch (SQLException e){e.printStackTrace();}%>
+                </tr>
 
                 </tr>
             </table>
         </div>
         <%}%>
     </form>
-
-
+    <div id="imgModal" class="modal">
+        <span class="close">x</span>
+        <img class="modal-content" id="imgZoom">
+    </div>
 </div>
-<%@include file="mainDashboard.jsp" %>
 
+<%@include file="mainDashboard.jsp" %>
+<script>
+    function zoomImg(imgId)
+    {
+        var modal = document.getElementById("imgModal");
+        var img = document.getElementById(imgId);
+        var modalImg = document.getElementById("imgZoom");
+        modal.style.display = "block";
+        modalImg.src = img.src;
+
+        var closeBtn = document.getElementsByClassName("close")[0];
+
+        closeBtn.onclick = function()
+        {
+            console.log("close");
+            modal.style.display = "none";
+        }
+    }
+
+</script>
 </body>
 </html>

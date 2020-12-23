@@ -58,33 +58,30 @@
 .imgL,.imgR{
     width: 480px;
     height: 300px;
+    cursor: pointer;
 }
 .singleImg{
     width: 960px;
     height: 600px;
+    cursor: pointer;
 }
 .imgL:hover {
     transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     margin-left: 60px;
     border:1px white solid;
     transition: 1s;
-    cursor: zoom-in;
-
 }
 .singleImg :hover {
     transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     margin-left: 60px;
     border:1px white solid;
     transition: 1s;
-    cursor: zoom-in;
 }
 .imgR:hover {
     transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     margin-right: 60px;
     border:1px white solid;
     transition: 1s;
-    cursor: zoom-in;
-
 }
 .Dobimage{
 
@@ -124,15 +121,6 @@
     }
 
 }
-@media screen and (max-height: 580px){
-    .content{
-        grid-gap: 5rem;
-        top:0;
-    }
-    .head{
-        display: none;
-    }
-}
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -157,4 +145,76 @@
     border:1px white solid;
     background: #052740;
     transition: 800ms;
+}
+
+/* Image Zoom */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,1);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.modal-content{
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)}
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+/*Need to change the properties (position,right,left) of the .close */
+.close{
+    position: absolute;
+    right: 30px;
+    top: 15px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover, .close:focus {
+    color: crimson;
+    border: crimson;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media screen and (max-height: 580px){
+    .content{
+        grid-gap: 5rem;
+        top:0;
+    }
+    .head{
+        display: none;
+    }
+}
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
 }
