@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="HumanResourceManagmentSystem:war" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d05cefd9-e072-4f00-8a5e-a5b1013beb3e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ChatSystem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeleteMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/chat/MessagesBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/chat/MessagesDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/user/EmployeeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/user/EmployeeDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/chatSystem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/chatSystem.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/home.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/chatSystem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/chatSystem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/loadDataToTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/loadDataToTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/searchEmployee.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/searchEmployee.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/style/chatSystem.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/style/chatSystem.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/AddComplain.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/AddComplain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/AddCustomizeData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/AddCustomizeData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/AddEmployee.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/AddEmployee.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/AddPost.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/AddPost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/ApplyLeave.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/ApplyLeave.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/Customize/CustomizeDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/Customize/CustomizeDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/DBconnection/DBconn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/DBconnection/DBconn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/DeletePost.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/DeletePost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/EditPost.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/EditPost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/LeaveReports.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/LeaveReports.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/Login.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/Login.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/SearchAllLeaves.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/SearchAllLeaves.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/SearchLeaves.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/SearchLeaves.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/SocialIntranet/PostDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/SocialIntranet/PostDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/UpdateEmployee.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/UpdateEmployee.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/complains/ComplainDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/complains/ComplainDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/leave/LeaveDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/leave/LeaveDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/login/LoginDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/login/LoginDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/user/EmployeeDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/user/EmployeeDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/user/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/classes/user/UserDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/chatSystem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/chatSystem.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/home.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/js/chatSystem.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/js/chatSystem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/js/loadDataToTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/js/loadDataToTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/searchEmployee.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/searchEmployee.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/style/chatSystem.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/HumanResourceManagmentSystem-1.0-SNAPSHOT/style/chatSystem.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AddComplain.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AddComplain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AddCustomizeData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AddCustomizeData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AddEmployee.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AddEmployee.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AddPost.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AddPost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ApplyLeave.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ApplyLeave.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Customize/CustomizeDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Customize/CustomizeDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DBconnection/DBconn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DBconnection/DBconn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DeletePost.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DeletePost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/EditPost.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/EditPost.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/LeaveReports.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/LeaveReports.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Login.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Login.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/SearchAllLeaves.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SearchAllLeaves.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/SearchLeaves.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SearchLeaves.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/SocialIntranet/PostDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SocialIntranet/PostDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/UpdateEmployee.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/UpdateEmployee.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/complains/ComplainDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/complains/ComplainDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/leave/LeaveDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/leave/LeaveDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/login/LoginDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/login/LoginDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/user/EmployeeDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/user/EmployeeDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/user/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/user/UserDao.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1mBKmp4LrLVq0sI6XBE2ogv4KUc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Tomcat 9.0.39" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.39" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/HumanResourceManagmentSystem_war/" />
+      <option name="BROWSER_ID" value="53e2f627-b1a7-4dfa-bfa7-5b83cc034776" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="HumanResourceManagmentSystem:war">
+          <settings>
+            <option name="CONTEXT_PATH" value="/HumanResourceManagmentSystem_war" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_HumanResourceManagmentSystem_3" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="58728" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="HumanResourceManagmentSystem:war" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d05cefd9-e072-4f00-8a5e-a5b1013beb3e" name="Default Changelist" comment="" />
+      <created>1608961707527</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1608961707527</updated>
+      <workItem from="1608961708626" duration="28781000" />
+      <workItem from="1609088286746" duration="4617000" />
+      <workItem from="1609162646285" duration="14709000" />
+      <workItem from="1609218483482" duration="30014000" />
+      <workItem from="1609340142594" duration="6978000" />
+      <workItem from="1609415952058" duration="7125000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="168" y="37" width="1092" height="731" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608962041180">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="168" y="37" width="1092" height="731" key="#com.intellij.execution.impl.EditConfigurationsDialog/62.0.1304.768@62.0.1304.768" timestamp="1608962041180" />
+    <state width="861" height="187" key="GridCell.Tab.0.bottom" timestamp="1609430213898">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.0.bottom/62.0.1304.768@62.0.1304.768" timestamp="1609430213898" />
+    <state width="861" height="187" key="GridCell.Tab.0.center" timestamp="1609430213898">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.0.center/62.0.1304.768@62.0.1304.768" timestamp="1609430213898" />
+    <state width="861" height="187" key="GridCell.Tab.0.left" timestamp="1609430213897">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.0.left/62.0.1304.768@62.0.1304.768" timestamp="1609430213897" />
+    <state width="861" height="187" key="GridCell.Tab.0.right" timestamp="1609430213898">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.0.right/62.0.1304.768@62.0.1304.768" timestamp="1609430213898" />
+    <state width="861" height="187" key="GridCell.Tab.1.bottom" timestamp="1609430213899">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.1.bottom/62.0.1304.768@62.0.1304.768" timestamp="1609430213899" />
+    <state width="861" height="187" key="GridCell.Tab.1.center" timestamp="1609430213899">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.1.center/62.0.1304.768@62.0.1304.768" timestamp="1609430213899" />
+    <state width="861" height="187" key="GridCell.Tab.1.left" timestamp="1609430213898">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.1.left/62.0.1304.768@62.0.1304.768" timestamp="1609430213898" />
+    <state width="861" height="187" key="GridCell.Tab.1.right" timestamp="1609430213899">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.1.right/62.0.1304.768@62.0.1304.768" timestamp="1609430213899" />
+    <state width="861" height="187" key="GridCell.Tab.2.bottom" timestamp="1609430213900">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.2.bottom/62.0.1304.768@62.0.1304.768" timestamp="1609430213900" />
+    <state width="861" height="187" key="GridCell.Tab.2.center" timestamp="1609430213900">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.2.center/62.0.1304.768@62.0.1304.768" timestamp="1609430213900" />
+    <state width="861" height="187" key="GridCell.Tab.2.left" timestamp="1609430213900">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.2.left/62.0.1304.768@62.0.1304.768" timestamp="1609430213900" />
+    <state width="861" height="187" key="GridCell.Tab.2.right" timestamp="1609430213900">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state width="861" height="187" key="GridCell.Tab.2.right/62.0.1304.768@62.0.1304.768" timestamp="1609430213900" />
+    <state x="444" y="133" key="extract.method.dialog" timestamp="1609426313259">
+      <screen x="62" y="0" width="1304" height="768" />
+    </state>
+    <state x="444" y="133" key="extract.method.dialog/62.0.1304.768@62.0.1304.768" timestamp="1609426313259" />
+  </component>
+</project>
