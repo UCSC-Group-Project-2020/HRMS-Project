@@ -16,7 +16,6 @@ public class UserBean
         return firstName;
     }
     public void setName(String firstName) {
-
         this.firstName = firstName;
     }
     public String getEmpId()

@@ -1,7 +1,5 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="DBconnection.DBconn" %>
-<%@ page import="java.sql.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="leave.LeaveBean" %>
 <%@ page import="leave.LeaveDao" %>

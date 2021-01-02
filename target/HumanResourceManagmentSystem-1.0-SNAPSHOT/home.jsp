@@ -31,7 +31,7 @@
             request.setAttribute("session", "Expired");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }%>
-    
+
     <%if(session.getAttribute("postView").equals(0)){%>
 
     <img class="noPostImg" src="img/noPost.jpg" />

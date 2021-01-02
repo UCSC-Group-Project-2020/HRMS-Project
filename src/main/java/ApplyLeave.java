@@ -30,9 +30,6 @@ public class ApplyLeave extends HttpServlet {
             request.getRequestDispatcher("/applyForLeave.jsp").forward(request, response);
         }else {
 
-
-
-
             LeaveBean newleave = new LeaveBean();
 
             newleave.setEmpId(empId);

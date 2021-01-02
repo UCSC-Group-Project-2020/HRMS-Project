@@ -19,6 +19,14 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>SalaryManagement</servlet-name>
+        <servlet-class>SalaryManagement</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SalaryManagement</servlet-name>
+        <url-pattern>/salaryManage</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ApplyLeave</servlet-name>
         <servlet-class>ApplyLeave</servlet-class>
     </servlet>
@@ -100,6 +108,39 @@
     <servlet-mapping>
         <servlet-name>SearchLeaves</servlet-name>
         <url-pattern>/searchMyLeaves</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>searchMySalaries</servlet-name>
+        <servlet-class>searchMySalaries</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchMySalaries</servlet-name>
+        <url-pattern>/searchMySalaries</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>searchStaffSalaries</servlet-name>
+        <servlet-class>searchStaffSalaries</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchStaffSalaries</servlet-name>
+        <url-pattern>/searchStaffSalaries</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>manageErrors</servlet-name>
+        <servlet-class>manageErrors</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>manageErrors</servlet-name>
+        <url-pattern>/manageErrors</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>searchStaffSalariesToPDF</servlet-name>
+        <servlet-class>SalaryReports</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchStaffSalariesToPDF</servlet-name>
+        <url-pattern>/searchStaffSalariesToPDF</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>SearchAllLeaves</servlet-name>

@@ -3,11 +3,15 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div class="head">
-    <%try {
+    <%
+
+        try {
         Connection con = DBconn.getConnection();
         Statement statement = con.createStatement();
         ResultSet rsNotifi = null;
-        rsNotifi = statement.executeQuery("SELECT * FROM notification where receiverId ="+session.getAttribute("empId"));
+
+            rsNotifi = statement.executeQuery("SELECT * FROM notification where receiverId ="+session.getAttribute("empId"));
+
         while (rsNotifi.next()) {
             int msgnotify=rsNotifi.getInt("messageFlag");
             int leaveNotify=rsNotifi.getInt("leaveFlag");
@@ -21,11 +25,11 @@
     <%if(session.getAttribute("decisionLeave").equals(1)) {%><a href="approveOrRejectLeave.jsp" class="Leave" <%if(leaveNotify==1){%> style="background-color: forestgreen"<%}%>>Leave Requests</a><%}%>
     <%if(session.getAttribute("viewMyLeaves").equals(1)) {%><a href="myLeaveHistory.jsp" class="Leave" <%if(levResponce==1){%> style="background-color: forestgreen"<%}%> >Leave Response</a><%}%>
     <%if(session.getAttribute("viewComSug").equals(1)) {%><a href="viewComplains.jsp" class="com" <%if(comNotify==1){%>style="background-color: forestgreen"<%}%>>Complain/Suggestion</a><%}}
-} catch (SQLException e) {
-    e.printStackTrace();
-    System.out.println(e);
-}
-%>
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }%>
 </div>
 <div class="main-menu">
     <img href="home.jsp" class="avater" src="img/avatar.svg" alt="">

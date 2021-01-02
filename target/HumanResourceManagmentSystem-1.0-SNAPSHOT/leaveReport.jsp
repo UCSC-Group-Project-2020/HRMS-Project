@@ -20,7 +20,7 @@
 <body>
 <div class="content">
     <div class="heading">
-        <h3> Leave Report </h3>
+        <h3> Leave Reports </h3>
     </div>
     <br>
     <form action="searchAllLeavesToPDF" method="POST">
@@ -89,7 +89,7 @@ String display;
                 System.out.println(results.getstatus() + results.getType() + results.getfromDate() + results.gettoDate());
                 display = results.getstatus() + results.getType() + results.getfromDate() + results.gettoDate();
             }else {
-                display ="All Leaves";
+                display ="All Leave Details";
             }
         %>
         <div>
@@ -158,10 +158,7 @@ String display;
                             int id= Integer.parseInt(leave.getAuthorizedPersonId());
                             System.out.println(id);
                 %>
-
-
                 <tr>
-
                     <td class="leaveId"><%=leave.getLeaveId()%></td>
                     <td class="empId"><%=leave.getEmpId()%></td>
                     <td class="appDate"><%=leave.getappDate()%></td>
@@ -176,18 +173,14 @@ String display;
                     <td class="type"<%if(leave.getType().equals("Payed")){%>style="color: dodgerblue" <%}
                 else if(leave.getType().equals("NoPay")){%>style="color:crimson"<%}
                 else if(leave.getType().equals("Medical")){%>style="color:forestgreen"<%}%>><%=leave.getType()%></td>
-
                     <%}}%>
-
                 </tr>
-
-
             </table>
         </div>
 
     </form>
     <div>
-        <input class="show" type="submit" onclick="toPDF()" value="Download PDF"/>
+        <input class="show" type="submit" onclick="leavestoPDF()" value="Download PDF"/>
     </div>
 
 </div>
@@ -197,4 +190,5 @@ String display;
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script src="js/printLeaves.js"></script>
+
 </html>
