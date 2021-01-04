@@ -14,10 +14,16 @@
 <body>
 <div class="content">
     <div class="heading">
-        <h3> Staff Salary Overveiw </h3>
+        <h3> Staff Salary History </h3>
     </div>
     <br>
     <form action="searchStaffSalaries" method="POST">
+
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
         <div class="selection">
             <table class="searchSal">
                 <tr>

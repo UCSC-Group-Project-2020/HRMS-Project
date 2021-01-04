@@ -21,6 +21,11 @@
     <div class="heading">
         <h3>View Complain/Suggestions</h3>
     </div>
+    <%HttpSession sss = request.getSession(false);
+        if (sss == null || sss.isNew()) {
+            request.setAttribute("session", "Expired");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }%>
         <%
             String result= (String) request.getAttribute("result");
 

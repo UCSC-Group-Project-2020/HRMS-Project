@@ -1,187 +1,169 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Deshan-UCSC
-  Date: 10/18/2020
-  Time: 6:38 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="attendance.attendanceBean" %>
+<%@ page import="attendance.attendanceDao" %>
 <%@ page import="java.util.List" %>
-<%@ page import="leave.LeaveBean" %>
-<%@ page import="leave.LeaveDao" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import ="java.util.Date" %>
 <html>
 <head>
-    <title class="mainHEAD">Human Resource Management System</title>
+    <title>Human Resource Management System</title>
     <link rel="icon" href="img/logo.png" sizes="25x25" type="image/png">
     <link rel="stylesheet" href="style/mainStyle.css">
-    <link rel="stylesheet" href="style/staffAttendanceHistory.css">
-</head><body>
+    <link rel="stylesheet" href="style/attendanceHistory.css">
+</head>
+<body>
 <div class="content">
     <div class="heading">
-        <h3>Attendance Report </h3>
+        <h3>Attendance Reports </h3>
     </div>
     <br>
-    <div class="selection">
-        <table>
-            <tr>
-                <td>
-                    <label class="label">From</label>
-                </td>
-                <th>
-                    <div class="year">
-                        <input type="number" id="fromYear" name="fromYear" value="2020">
-                    </div>
+    <form action="searchStaffAttendancesToPDF" method="POST">
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
+        <input class="input" type="number" name="empId" value="<%=session.getAttribute("empId")%>" hidden>
+        <div class="selection">
+            <table>
+                <tr>
+                    <td>
+                        <label class="label">Emp Id</label>
+                    </td>
+                    <th class="ID">
+                        <input class="empId" type="number" id="employeeID" name="employeeID" min="10000" value="10000">
+                    </th>
+                </tr>
+            </table>
+            <table class="searchSal">
+                <tr>
+                    <td>
+                        <label class="label">Worked Hours</label>
+                    </td>
+                    <th >
+                        <input  type="text" id="workedHoursFrom" name="workedHoursFrom" placeholder="HH:MM">
+                    </th>
+                    <th >
+                        <input  type="text" id="workedHoursTo" name="workedHoursTo" placeholder="HH:MM">
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="label">OT Hours</label>
+                    </td>
+                    <th >
+                        <input  type="number" id="otHoursFrom" name="otHoursFrom" value="0">
+                    </th>
+                    <th >
+                        <input  type="number" id="otHoursTo" name="otHoursTo" value="24">
+                    </th>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <label class="label">From</label>
+                    </td>
+                    <th>
+                        <div class="year">
+                            <input class="input" type="date" id="fromDate" name="fromDate">
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="label">To</label>
+                    </td>
+                    <th>
+                        <div class="year">
+                            <input class="input" type="date" id="toDate" name="toDate">
+                        </div>
 
-                </th>
-                <th>
-                    <div class="date">
-                        <select name="fromMonth" id="fromMonth">
-                            <option value="01">January</option>
-                            <option value="02">February</option>
-                            <option value="03">March</option>
-                            <option value="04">April</option>
-                            <option value="05">May</option>
-                            <option value="06">June</option>
-                            <option value="07">July</option>
-                            <option value="08">Auguest</option>
-                            <option value="09">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                    </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>
+                        <input class="show" type="submit" value="Show"/>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <%
+            attendanceBean results= (attendanceBean) request.getAttribute("results");
+            String display;
+            if (results != null) {
+                display=results.getFromDate() +results.getToDate() + results.getWorkedHoursFrom() + results.getWorkedHoursTo() +results.getOtHoursFrom()+results.getOtHoursTo()+results.getEmpId();
+        }else {
+                display = "All Attendances of Staff Members";
+            }
+        %>
+        <div>
+            <table id="result">
+                <tr class="searchResults">
+                    <td id="detail">
+                        <%=display%>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <%
+        String empId= request.getParameter("employeeID");
+        String workedHoursFrom= request.getParameter("workedHoursFrom");
+        String workedHoursTo= request.getParameter("workedHoursTo");
+        String otHoursFrom= request.getParameter("otHoursFrom");
+        String otHoursTo= request.getParameter("otHoursTo");
+        String from= request.getParameter("fromDate");
+        String to= request.getParameter("toDate");
 
-                </th>
+        attendanceDao attendance = new attendanceDao();
+        List<attendanceBean> attendanceListDefault = attendance.staffAttendance(empId,from,to,workedHoursFrom,workedHoursTo,otHoursFrom,otHoursTo);
+    %>
 
-            </tr>
-            <tr>
-                <td>
-                    <label class="label">To</label>
-                </td>
-                <th>
-                    <div class="year">
-                        <input type="number" id="toYear" name="toYear" value="2020">
-                    </div>
-
-                </th>
-                <th>
-                    <div class="date">
-                        <select name="toMonth" id="toMonth">
-                            <option value="01">January</option>
-                            <option value="02">February</option>
-                            <option value="03">March</option>
-                            <option value="04">April</option>
-                            <option value="05">May</option>
-                            <option value="06">June</option>
-                            <option value="07">July</option>
-                            <option value="08">Auguest</option>
-                            <option value="09">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option selected value="12">December</option>
-                        </select>
-                    </div>
-
-                </th>
-
-            </tr>
-            <tr>
-                <td>
-
-                </td>
-                <th></th>
-                <th>
-                    <input class="send" type="submit" value="Show"/>
-                </th>
-            </tr>
-        </table>
-    </div>
     <div class="result">
         <br>
-        <table id="table">
+        <table id="myTable">
+            <%
+
+                for(attendanceBean attend:attendanceListDefault){
+            %>
             <tr>
-                <th>
-                    Attendance ID
-                </th>
-                <th>
-                    Employee ID
-                </th>
-                <th>
-                    Date
-                </th>
-                <th>
-                    Attend Time
-                </th>
-                <th>
-                    Leave Time
-                </th>
-                <th>
-                    Worked Hours
-                </th>
-                <th>
-                    OT Hours
-                </th>
-
+                <td class="attendData"><%=attend.getAttendanceId()%></td>
+                <td class="attendData"><%=attend.getEmpId()%></td>
+                <td class="attendData" ><%=attend.getDate()%></td>
+                <td class="attendData"><%=attend.getAttendTime()%></td>
+                <td class="attendData"><%=attend.getLeaveTime()%></td>
+                <td class="attendData" style="color:forestgreen"><%=attend.getWorkedHrs()%></td>
+                <td class="attendData" style="color:dodgerblue"><%=attend.getotHours()%></td>
             </tr>
+            <%}
+                String search= request.getParameter("totSalary");
+                if (search != null) {
+                    List<attendanceBean> attendancesBySearch = (List<attendanceBean>) request.getAttribute("attendances");
+                    for(attendanceBean attend:attendancesBySearch){
+                        if(session.getAttribute("empId").equals(attend.getEmpId())){}
+                        else{
+            %>
             <tr>
-                <td>
-                    Sample ID 1
-                </td>
-                <td>
-                    Sample Emp 1
-                </td>
-                <td>
-                    Sample Date 1
-                </td>
-                <td>
-                    Sample Attend 1
-                </td>
-                <td>
-                    Sample Leave 1
-                </td>
-                <td>
-                    Sample W/H 1
-                </td>
-                <td>
-                    Sample OT 1
-                </td>
-
+                <td class="attendData"><%=attend.getAttendanceId()%></td>
+                <td class="attendData"><%=attend.getEmpId()%></td>
+                <td class="attendData"><%=attend.getDate()%></td>
+                <td class="attendData"><%=attend.getAttendTime()%></td>
+                <td class="attendData"><%=attend.getLeaveTime()%></td>
+                <td class="attendData" style="color:forestgreen"><%=attend.getWorkedHrs()%></td>
+                <td class="attendData" style="color:dodgerblue"><%=attend.getotHours()%></td>
             </tr>
-            <tr>
-
-                <td>
-                    Sample ID 2
-                </td>
-                <td>
-                    Sample Emp 2
-                </td>
-                <td>
-                    Sample Date 2
-                </td>
-                <td>
-                    Sample Attend 2
-                </td>
-                <td>
-                    Sample Leave 2
-                </td>
-                <td>
-                    Sample W/H 2
-                </td>
-                <td>
-                    Sample OT 2
-                </td>
-            </tr>
-
+            <%}}}%>
         </table>
     </div>
     <div>
-        <input class="show" type="submit" onclick="toPDF()" value="Download PDF"/>
+        <input class="show" type="submit" onclick="AttendancestoPDF()" value="Download PDF"/>
     </div>
 </div>
 </div>
 <%@include file="mainDashboard.jsp" %>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="js/printAttendances.js"></script>
 </html>

@@ -25,6 +25,11 @@
         <h3>Resolve Conflicts</h3>
     </div>
     <form action="manageErrors" method="POST">
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
         <%
             String result= (String) request.getAttribute("result");
             if(result != null){
