@@ -24,6 +24,11 @@
     </div>
     <br>
     <form action="searchAllLeavesToPDF" method="POST">
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
         <input class="input" type="number" name="empId" value="<%=session.getAttribute("empId")%>" hidden>
         <div class="selection">
             <table>

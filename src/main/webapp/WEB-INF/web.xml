@@ -8,7 +8,7 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
     <session-config>
-        <session-timeout>5</session-timeout>
+        <session-timeout>15</session-timeout>
     </session-config>
     <servlet>
         <servlet-name>Login</servlet-name>
@@ -118,6 +118,23 @@
         <servlet-name>searchMySalaries</servlet-name>
         <url-pattern>/searchMySalaries</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>searchMyAttendances</servlet-name>
+        <servlet-class>searchMyAttendances</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchMyAttendances</servlet-name>
+        <url-pattern>/searchMyAttendances</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>searchStaffAttendances</servlet-name>
+        <servlet-class>searchStaffAttendances</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchStaffAttendances</servlet-name>
+        <url-pattern>/searchStaffAttendances</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>searchStaffSalaries</servlet-name>
         <servlet-class>searchStaffSalaries</servlet-class>
@@ -141,6 +158,14 @@
     <servlet-mapping>
         <servlet-name>searchStaffSalariesToPDF</servlet-name>
         <url-pattern>/searchStaffSalariesToPDF</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>searchStaffAttendancesToPDF</servlet-name>
+        <servlet-class>searchStaffAttendancesToPDF</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchStaffAttendancesToPDF</servlet-name>
+        <url-pattern>/searchStaffAttendancesToPDF</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>SearchAllLeaves</servlet-name>
@@ -190,5 +215,13 @@
     <servlet-mapping>
         <servlet-name>DeletePost</servlet-name>
         <url-pattern>/deletepost</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ChatSystem</servlet-name>
+        <servlet-class>ChatSystem </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChatSystem</servlet-name>
+        <url-pattern>/chatmessages</url-pattern>
     </servlet-mapping>
 </web-app>

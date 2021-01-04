@@ -21,7 +21,11 @@
     <div class="heading"><h3>Apply For Leave</h3>
     </div>
     <form action="applyLeave" method="POST">
-
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
     <%
         String result= (String) request.getAttribute("result");
 

@@ -21,6 +21,11 @@
     <link rel="stylesheet" href="style/salaryManagement.css">
 </head>
 <body>
+<%HttpSession sss = request.getSession(false);
+    if (sss == null || sss.isNew()) {
+        request.setAttribute("session", "Expired");
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
+    }%>
 <%  Date date = new Date();
     SimpleDateFormat formatter = new SimpleDateFormat("dd");
     String d= formatter.format(date);

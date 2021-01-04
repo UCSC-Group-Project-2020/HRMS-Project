@@ -27,6 +27,11 @@
         <h3>Delete Post</h3>
     </div>
     <form method="POST" action="deletepost" id="delAnyPost">
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
         <%
             String result= (String) request.getAttribute("result");
 

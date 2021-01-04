@@ -23,7 +23,11 @@
     <div class="heading">
         <h3>Add Employee FingerPrint</h3>
     </div>
-
+    <%HttpSession sss = request.getSession(false);
+        if (sss == null || sss.isNew()) {
+            request.setAttribute("session", "Expired");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }%>
         <%
             String result= (String) request.getAttribute("result");
             if(result != null){

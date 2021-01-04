@@ -276,7 +276,42 @@ public class EmployeeDao
         }
         return empList;
     }
+    public List<UserBean> searchChatEmployees()
+    {
+        List<UserBean> empList = new ArrayList<UserBean>();
 
+        Connection con = null;
+        Statement statement = null;
+        ResultSet rs = null;
+
+        String empId,fName,lName;
+
+        try
+        {
+            con = DBconn.getConnection();
+            statement = con.createStatement();
+            rs = statement.executeQuery("SELECT user.empId,user.firstName,user.lastName FROM user INNER JOIN userprivilege ON user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1");
+            while(rs.next())
+            {
+                UserBean employee = new UserBean();
+                empId = rs.getString("empId");
+                fName = rs.getString("firstName");
+                lName = rs.getString("lastName");
+
+                employee.setEmpId(empId);
+                employee.setFName(fName);
+                employee.setLName(lName);
+
+                empList.add(employee);
+            }
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return empList;
+    }
     public String addEmployee(UserBean newEmp) {
         Connection con = null;
         Statement statement = null;

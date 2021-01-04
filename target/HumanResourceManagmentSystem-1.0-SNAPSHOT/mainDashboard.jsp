@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div class="head">
+
     <%
 
         try {
@@ -20,7 +21,7 @@
             int levResponce=rsNotifi.getInt("leaveResponseFlag");
     %>
     <a href="login.jsp" class="Logout">Logout</a>
-    <%if(session.getAttribute("chatSys").equals(1)) {%><a class="Msgs" aria-readonly="true"<%if(msgnotify==1){%>style="background-color: crimson"<%}%>>Messages</a><%}%>
+    <%if(session.getAttribute("chatSys").equals(1)) {%><a href="chatSystem.jsp" class="Msgs" aria-readonly="true"<%if(msgnotify==1){%>style="background-color: crimson"<%}%>>Messages</a><%}%>
     <%if(session.getAttribute("viewMySalary").equals(1)) {%><a href="mySalaryOverview.jsp" class="Salary"<%if(salNotify==1){%>style="background-color: crimson" <%}%>>Calculated Salary</a><%}%>
     <%if(session.getAttribute("decisionLeave").equals(1)) {%><a href="approveOrRejectLeave.jsp" class="Leave" <%if(leaveNotify==1){%> style="background-color: forestgreen"<%}%>>Leave Requests</a><%}%>
     <%if(session.getAttribute("viewMyLeaves").equals(1)) {%><a href="myLeaveHistory.jsp" class="Leave" <%if(levResponce==1){%> style="background-color: forestgreen"<%}%> >Leave Response</a><%}%>
