@@ -224,4 +224,12 @@
         <servlet-name>ChatSystem</servlet-name>
         <url-pattern>/chatmessages</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DownloadFile</servlet-name>
+        <servlet-class>DownloadFile </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DownloadFile</servlet-name>
+        <url-pattern>/downloadfile</url-pattern>
+    </servlet-mapping>
 </web-app>

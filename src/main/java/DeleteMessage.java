@@ -24,7 +24,7 @@ public class DeleteMessage extends HttpServlet
         st = delMsg.getMsgStatus(msgId);
 
         SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        java.util.Date now = new java.util.Date();
+        Date now = new Date();
         pDate = dtf.format(now);
         try {
             dateTimeNow = dtf.parse(pDate);
