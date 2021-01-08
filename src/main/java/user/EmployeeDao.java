@@ -73,9 +73,9 @@ public class EmployeeDao
         String fName,lName,NIC,dob,address,email,password,contact;
         int empAddDB,empDelDB,postAddDB,postDelDB,postViewDB,chatSysDB,applyLeaveDB,decisionLeaveDB,salaryManageDB,customizeDataDB,editPersonalDetailsDB,giveComSugDB,viewComSugDB,viewMyAttendDB,viewAllAttendDB,viewMyLeavesDB,viewAllLeavesDB,viewMySalaryDB,viewAllSalaryDB,genReportDB;
         float basicSal,otRate;
-         int totPayedLeaves, remPayedLeaves ,tackenPayedLeaves;
-         int totNoPayedLeaves, remNoPayedLeaves,tackenNoPayLeaves;
-         int totMedicalLeaves, remMedicalLeaves ,tackenMedicalLeaves;
+        int totPayedLeaves, remPayedLeaves ,tackenPayedLeaves;
+        int totNoPayedLeaves, remNoPayedLeaves,tackenNoPayLeaves;
+        int totMedicalLeaves, remMedicalLeaves ,tackenMedicalLeaves;
         try
         {
             con = DBconn.getConnection();
@@ -276,13 +276,16 @@ public class EmployeeDao
         }
         return empList;
     }
-    public List<UserBean> searchChatEmployees()
+    public List<UserBean> searchChatEmployees(Object uId)
     {
         List<UserBean> empList = new ArrayList<UserBean>();
 
         Connection con = null;
         Statement statement = null;
-        ResultSet rs = null;
+        ResultSet rs1 = null;
+        ResultSet rs2 = null;
+        ResultSet rs3 = null;
+        ResultSet rs4 = null;
 
         String empId,fName,lName;
 
@@ -290,20 +293,43 @@ public class EmployeeDao
         {
             con = DBconn.getConnection();
             statement = con.createStatement();
-            rs = statement.executeQuery("SELECT user.empId,user.firstName,user.lastName FROM user INNER JOIN userprivilege ON user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1");
-            while(rs.next())
+            //rs = statement.executeQuery("SELECT user.empId,user.firstName,user.lastName FROM user INNER JOIN userprivilege ON user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1");
+            rs1 = statement.executeQuery("SELECT user.empId, user.firstName, user.lastName FROM user INNER JOIN chat ON user.empId = chat.receiverId OR user.empId = chat.senderId WHERE (chat.senderId = '"+uId+"' && chat.msgId = (SELECT MAX(chat.msgId) FROM chat WHERE senderId = '"+uId+"' && receiverId = user.empId)) OR (chat.receiverId = '"+uId+"' && chat.msgId = (SELECT MAX(chat.msgId) FROM chat WHERE receiverId = '"+uId+"' && senderId = user.empId)) GROUP BY user.empId ORDER BY MAX(chat.msgId) DESC");
+            System.out.println("SELECT user.empId, user.firstName, user.lastName FROM user INNER JOIN chat ON user.empId = chat.receiverId OR user.empId = chat.senderId WHERE (chat.senderId = '"+uId+"' && chat.msgId = (SELECT MAX(chat.msgId) FROM chat WHERE senderId = '"+uId+"' && receiverId = user.empId)) OR (chat.receiverId = '"+uId+"' && chat.msgId = (SELECT MAX(chat.msgId) FROM chat WHERE receiverId = '"+uId+"' && senderId = user.empId)) GROUP BY user.empId ORDER BY MAX(chat.msgId) DESC");
+
+            while(rs1.next())
             {
                 UserBean employee = new UserBean();
-                empId = rs.getString("empId");
-                fName = rs.getString("firstName");
-                lName = rs.getString("lastName");
-
+                empId = rs1.getString("user.empId");
+                fName = rs1.getString("user.firstName");
+                lName = rs1.getString("user.lastName");
+                System.out.println("1 - " +empId);
                 employee.setEmpId(empId);
                 employee.setFName(fName);
                 employee.setLName(lName);
 
                 empList.add(employee);
             }
+
+                rs2 = statement.executeQuery("SELECT user.empId, user.firstName, user.lastName FROM user INNER join userprivilege on user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1 AND user.empId Not IN( SELECT user.empId FROM user INNER JOIN chat ON user.empId = chat.receiverId OR user.empId = chat.senderId WHERE (chat.senderId = '" + uId + "' && chat.msgId = (SELECT MAX(chat.msgId) FROM chat WHERE senderId = '" + uId + "' && receiverId = user.empId)) OR (chat.receiverId = '" + uId + "' && chat.msgId = (SELECT MAX(chat.msgId) FROM chat WHERE receiverId = '" + uId + "' && senderId = user.empId)) GROUP BY user.empId ORDER BY MAX(chat.msgId) DESC) ORDER BY `user`.`empId` ASC");
+                //rs2 = statement.executeQuery("SELECT user.empId, user.firstName, user.lastName FROM user INNER join userprivilege on user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1 AND (user.empId NOT IN (SELECT chat.receiverId FROM chat) AND user.empId NOT IN (SELECT chat.senderId  FROM chat))");
+                //System.out.println("SELECT user.empId, user.firstName, user.lastName FROM user INNER join userprivilege on user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1 AND (user.empId NOT IN (SELECT chat.receiverId FROM chat) OR user.empId NOT IN (SELECT chat.senderId  FROM chat))");
+                while(rs2.next())
+                {
+                    UserBean employee = new UserBean();
+                    empId = rs2.getString("user.empId");
+                    fName = rs2.getString("user.firstName");
+                    lName = rs2.getString("user.lastName");
+                    System.out.println("2 - "+empId);
+                    employee.setEmpId(empId);
+                    employee.setFName(fName);
+                    employee.setLName(lName);
+
+                    empList.add(employee);
+                }
+
+
+
             con.close();
         }
         catch (SQLException e)
@@ -311,6 +337,44 @@ public class EmployeeDao
             e.printStackTrace();
         }
         return empList;
+    }
+    public List<UserBean> searchChatEmployeesdef(Object uId) {
+        List<UserBean> empList = new ArrayList<UserBean>();
+
+        Connection con = null;
+        Statement statement = null;
+        ResultSet rs1 = null;
+        ResultSet rs2 = null;
+        ResultSet rs3 = null;
+        ResultSet rs4 = null;
+
+        String empId, fName, lName;
+
+        try {
+            con = DBconn.getConnection();
+            statement = con.createStatement();
+            System.out.println("No recent Load All");
+            rs4 = statement.executeQuery("SELECT user.empId, user.firstName, user.lastName FROM user INNER join userprivilege on user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1 ");
+            while (rs4.next()) {
+                UserBean employee = new UserBean();
+                empId = rs4.getString("user.empId");
+                fName = rs4.getString("user.firstName");
+                lName = rs4.getString("user.lastName");
+                employee.setEmpId(empId);
+                employee.setFName(fName);
+                employee.setLName(lName);
+
+                empList.add(employee);
+            }
+
+
+        }catch(SQLException e)
+                {
+                    e.printStackTrace();
+                }
+                return empList;
+
+
     }
     public String addEmployee(UserBean newEmp) {
         Connection con = null;
@@ -509,42 +573,42 @@ public class EmployeeDao
             return res;
 
         }
-            try
-            {
-                con = DBconn.getConnection();
-                statement = con.createStatement();
-                rs = statement.executeQuery("SELECT password FROM user WHERE empId = '"+id+"'");
-                System.out.println("SELECT password FROM user WHERE empId = '"+id+"'");
-                if(rs.next()){
-                    String pass=rs.getString("password");
-                    if (!pass.equals(currentPassword)){
-                        System.out.println(pass   +"----------- "+ currentPassword);
-                        return "ErrCurrent";
-                    }
+        try
+        {
+            con = DBconn.getConnection();
+            statement = con.createStatement();
+            rs = statement.executeQuery("SELECT password FROM user WHERE empId = '"+id+"'");
+            System.out.println("SELECT password FROM user WHERE empId = '"+id+"'");
+            if(rs.next()){
+                String pass=rs.getString("password");
+                if (!pass.equals(currentPassword)){
+                    System.out.println(pass   +"----------- "+ currentPassword);
+                    return "ErrCurrent";
                 }
-                PreparedStatement st1 = con.prepareStatement("UPDATE user SET firstName=?,lastName=?,NIC=?,DOB=?,address=?,contactNo=?,email=?,password=? WHERE empId=?");
-
-                st1.setString(1,fName );
-                st1.setString(2,lName);
-                st1.setString(3,NIC);
-                st1.setString(4,dob);
-                st1.setString(5,address);
-                st1.setString(6,contact);
-                st1.setString(7, email);
-                st1.setString(8,password);
-                st1.setInt(9, empId);
-
-                st1.executeUpdate();
-                st1.close();
-                con.close();
-                res = "Successful";
-                return res;
             }
-            catch (SQLException e) {
-                e.printStackTrace();
-                res = "Unsuccessful";
-                return res;
-            }
+            PreparedStatement st1 = con.prepareStatement("UPDATE user SET firstName=?,lastName=?,NIC=?,DOB=?,address=?,contactNo=?,email=?,password=? WHERE empId=?");
+
+            st1.setString(1,fName );
+            st1.setString(2,lName);
+            st1.setString(3,NIC);
+            st1.setString(4,dob);
+            st1.setString(5,address);
+            st1.setString(6,contact);
+            st1.setString(7, email);
+            st1.setString(8,password);
+            st1.setInt(9, empId);
+
+            st1.executeUpdate();
+            st1.close();
+            con.close();
+            res = "Successful";
+            return res;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            res = "Unsuccessful";
+            return res;
+        }
 
     }
     public String updateEmployee(UserBean Emp)
@@ -598,7 +662,7 @@ public class EmployeeDao
 
         totPayedLeaves = Emp.gettotPayedLeaves();
 
-        
+
         totNoPayedLeaves = Emp.gettotNoPayedLeaves();
 
 
@@ -616,9 +680,9 @@ public class EmployeeDao
         {
             remNoPayedLeaves=0;
         }if(remMedicalLeaves<0)
-        {
+    {
         remMedicalLeaves=0;
-        }
+    }
         basicSal = Emp.getBasicSal();
         otRate = Emp.getOtRate();
 
@@ -653,23 +717,23 @@ public class EmployeeDao
             return res;
 
         } else {
-        try
-        {
-            con = DBconn.getConnection();
-            PreparedStatement st1 = con.prepareStatement("UPDATE user SET firstName=?,lastName=?,NIC=?,DOB=?,address=?,contactNo=?,email=?,password=? WHERE empId=?");
+            try
+            {
+                con = DBconn.getConnection();
+                PreparedStatement st1 = con.prepareStatement("UPDATE user SET firstName=?,lastName=?,NIC=?,DOB=?,address=?,contactNo=?,email=?,password=? WHERE empId=?");
 
-            st1.setString(1,fName );
-            st1.setString(2,lName);
-            st1.setString(3,NIC);
-            st1.setString(4,dob);
-            st1.setString(5,address);
-            st1.setString(6,contact);
-            st1.setString(7, email);
-            st1.setString(8,password);
-            st1.setInt(9, empId);
+                st1.setString(1,fName );
+                st1.setString(2,lName);
+                st1.setString(3,NIC);
+                st1.setString(4,dob);
+                st1.setString(5,address);
+                st1.setString(6,contact);
+                st1.setString(7, email);
+                st1.setString(8,password);
+                st1.setInt(9, empId);
 
-            st1.executeUpdate();
-            PreparedStatement st2 = con.prepareStatement("UPDATE employeeleavedetails SET totalPayedLeaves=?,remainingPayedLeaves=? ,totalNoPayLeaves=?,remainingNoPayLeaves=?, totalMedicalLeaves=?,remainingMedicalLeaves=? WHERE empId=?");
+                st1.executeUpdate();
+                PreparedStatement st2 = con.prepareStatement("UPDATE employeeleavedetails SET totalPayedLeaves=?,remainingPayedLeaves=? ,totalNoPayLeaves=?,remainingNoPayLeaves=?, totalMedicalLeaves=?,remainingMedicalLeaves=? WHERE empId=?");
 
 
                 st2.setInt(1, totPayedLeaves);
@@ -680,59 +744,59 @@ public class EmployeeDao
                 st2.setInt(6, remMedicalLeaves);
                 st2.setInt(7, empId);
 
-            st2.executeUpdate();
+                st2.executeUpdate();
 
-            PreparedStatement st3 = con.prepareStatement("UPDATE employeesalarydetails SET basicSalary=?,otRate=? WHERE empId=?");
+                PreparedStatement st3 = con.prepareStatement("UPDATE employeesalarydetails SET basicSalary=?,otRate=? WHERE empId=?");
 
-            st3.setFloat(1, basicSal);
-            st3.setFloat(2, otRate);
-            st3.setInt(3, empId);
+                st3.setFloat(1, basicSal);
+                st3.setFloat(2, otRate);
+                st3.setInt(3, empId);
 
-            st3.executeUpdate();
+                st3.executeUpdate();
 
-            PreparedStatement st4 = con.prepareStatement("UPDATE userprivilege SET addEmployee=?, deleteEmployee=?, addPost=?, deletePost=?, viewPost=?, chatSystem=?, applyLeave=?, leavesApprovalRejection=?, salaryManagement=?, customizeData=?, editPersonalDetails=?, giveComplainSuggestion=?, viewComplainSuggestion=?, viewMyAttendance=?, viewAllAttendance=?, viewMyLeaves=?, viewAllLeaves=?, viewMySalary=?, viewAllSalary=?, generateReport=? WHERE empId=?");
+                PreparedStatement st4 = con.prepareStatement("UPDATE userprivilege SET addEmployee=?, deleteEmployee=?, addPost=?, deletePost=?, viewPost=?, chatSystem=?, applyLeave=?, leavesApprovalRejection=?, salaryManagement=?, customizeData=?, editPersonalDetails=?, giveComplainSuggestion=?, viewComplainSuggestion=?, viewMyAttendance=?, viewAllAttendance=?, viewMyLeaves=?, viewAllLeaves=?, viewMySalary=?, viewAllSalary=?, generateReport=? WHERE empId=?");
 
-            st4.setInt(1, empAddDB);
-            st4.setInt(2, empDelDB);
-            st4.setInt(3, postAddDB);
-            st4.setInt(4, postDelDB);
-            st4.setInt(5, postViewDB);
-            st4.setInt(6, chatSysDB);
-            st4.setInt(7, applyLeaveDB);
-            st4.setInt(8, decisionLeaveDB);
-            st4.setInt(9, salaryManageDB);
-            st4.setInt(10, customizeDataDB);
-            st4.setInt(11, editPersonalDetailsDB);
-            st4.setInt(12, giveComSugDB);
-            st4.setInt(13, viewComSugDB);
-            st4.setInt(14, viewMyAttendDB);
-            st4.setInt(15, viewAllAttendDB);
-            st4.setInt(16, viewMyLeavesDB);
-            st4.setInt(17, viewAllLeavesDB);
-            st4.setInt(18, viewMySalaryDB);
-            st4.setInt(19, viewAllSalaryDB);
-            st4.setInt(20, genReportDB);
-            st4.setInt(21, empId);
+                st4.setInt(1, empAddDB);
+                st4.setInt(2, empDelDB);
+                st4.setInt(3, postAddDB);
+                st4.setInt(4, postDelDB);
+                st4.setInt(5, postViewDB);
+                st4.setInt(6, chatSysDB);
+                st4.setInt(7, applyLeaveDB);
+                st4.setInt(8, decisionLeaveDB);
+                st4.setInt(9, salaryManageDB);
+                st4.setInt(10, customizeDataDB);
+                st4.setInt(11, editPersonalDetailsDB);
+                st4.setInt(12, giveComSugDB);
+                st4.setInt(13, viewComSugDB);
+                st4.setInt(14, viewMyAttendDB);
+                st4.setInt(15, viewAllAttendDB);
+                st4.setInt(16, viewMyLeavesDB);
+                st4.setInt(17, viewAllLeavesDB);
+                st4.setInt(18, viewMySalaryDB);
+                st4.setInt(19, viewAllSalaryDB);
+                st4.setInt(20, genReportDB);
+                st4.setInt(21, empId);
 
-            st4.executeUpdate();
+                st4.executeUpdate();
 
-            st1.close();
-            st2.close();
-            st3.close();
-            st4.close();
-            con.close();
+                st1.close();
+                st2.close();
+                st3.close();
+                st4.close();
+                con.close();
 
-            res = "Successful";
-            return res;
+                res = "Successful";
+                return res;
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                res = "Unsuccessful";
+                return res;
+            }
+
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            res = "Unsuccessful";
-            return res;
-        }
-
     }
-}
 
 }
 

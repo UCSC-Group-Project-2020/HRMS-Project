@@ -193,6 +193,8 @@
             </tr>
             <%
                 for(SalaryBean salary:salaries){
+                    if (session.getAttribute("empId").equals(salary.getEmpId())){}
+                    else{
             %>
             <tr>
                 <td class="empIdd"><%=salary.getSalarId()%></td>
@@ -206,7 +208,7 @@
                 <td class="otRate"><%=salary.getOtRate()%></td>
                 <td class="Total"><%=0%></td>
             </tr>
-            <%}%>
+            <%}}%>
         </table>
     </div>
 </div>

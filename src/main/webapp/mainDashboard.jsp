@@ -5,11 +5,26 @@
 <div class="head">
 
     <%
-
+        int msgCount=0;
         try {
         Connection con = DBconn.getConnection();
         Statement statement = con.createStatement();
-        ResultSet rsNotifi = null;
+        ResultSet rsNotifi,rsMsg = null;
+            PreparedStatement st2= con.prepareStatement("UPDATE notification SET messageFlag=?  WHERE receiverId = ?");
+            rsMsg = statement.executeQuery("SELECT COUNT(seenSt) as unseen FROM chat WHERE receiverId = '"+session.getAttribute("empId")+"'  && seenSt = 0");
+            if (rsMsg.next()){
+                msgCount=rsMsg.getInt("unseen");
+            }
+            if (msgCount == 0){
+                st2.setInt(1, 0);
+                st2.setString(2, (String) session.getAttribute("empId"));
+                st2.executeUpdate();
+            }else if (msgCount !=0){
+                st2.setInt(1, 1);
+                st2.setString(2, (String) session.getAttribute("empId"));
+                st2.executeUpdate();
+            }
+
 
             rsNotifi = statement.executeQuery("SELECT * FROM notification where receiverId ="+session.getAttribute("empId"));
 
@@ -21,7 +36,17 @@
             int levResponce=rsNotifi.getInt("leaveResponseFlag");
     %>
     <a href="login.jsp" class="Logout">Logout</a>
-    <%if(session.getAttribute("chatSys").equals(1)) {%><a href="chatSystem.jsp" class="Msgs" aria-readonly="true"<%if(msgnotify==1){%>style="background-color: crimson"<%}%>>Messages</a><%}%>
+    <%if(session.getAttribute("chatSys").equals(1)) {%>
+
+            <a href="chatSystem.jsp" class="Msgs" aria-readonly="true"<%if(msgnotify==1){%>style="background-color: forestgreen"<%}%>>
+                <%if(msgCount==0){%>
+                Messages
+            <%}else {%>
+                Messages ( <%=msgCount%> )
+                <%}%>
+            </a>
+
+    <%}%>
     <%if(session.getAttribute("viewMySalary").equals(1)) {%><a href="mySalaryOverview.jsp" class="Salary"<%if(salNotify==1){%>style="background-color: crimson" <%}%>>Calculated Salary</a><%}%>
     <%if(session.getAttribute("decisionLeave").equals(1)) {%><a href="approveOrRejectLeave.jsp" class="Leave" <%if(leaveNotify==1){%> style="background-color: forestgreen"<%}%>>Leave Requests</a><%}%>
     <%if(session.getAttribute("viewMyLeaves").equals(1)) {%><a href="myLeaveHistory.jsp" class="Leave" <%if(levResponce==1){%> style="background-color: forestgreen"<%}%> >Leave Response</a><%}%>
@@ -114,7 +139,7 @@
             <%}%>
             <%if(session.getAttribute("genReport").equals(1)) {%>
             <li>
-                <a>Reports<span class="sub-arrow"></span></a>
+                <a href="#">Reports<span class="sub-arrow"></span></a>
                 <ul>
                     <%if(session.getAttribute("genReport").equals(1)) {%><li><a href="attendanceReport.jsp">Attendance Reports</a></li><%}%>
                     <%if(session.getAttribute("genReport").equals(1)) {%><li><a href="salaryReport.jsp">Salary Reports</a></li><%}%>

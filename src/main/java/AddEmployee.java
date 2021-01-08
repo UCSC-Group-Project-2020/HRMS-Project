@@ -5,7 +5,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddEmployee extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,6 +33,23 @@ public class AddEmployee extends HttpServlet{
         password = request.getParameter("password");
         confirmPassword = request.getParameter("confirm_password");
 
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");
+        String today= formatter.format(date);
+
+        Date Birth = null;
+        Date currentDate = null;
+        try {
+            Birth = formatter.parse(dob);
+            currentDate = formatter.parse(today);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Birth.getTime() );
+        System.out.println( currentDate.getTime());
+
+        long isValidBDay = Birth.getTime() - currentDate.getTime();
 
         if (fName.isEmpty() || lName.isEmpty() || NIC.isEmpty() || dob.isEmpty()|| address.isEmpty()||
                 confirmPassword.isEmpty()||email.isEmpty()||password.isEmpty() || confirmPassword.isEmpty() ||
@@ -35,7 +57,7 @@ public class AddEmployee extends HttpServlet{
                 Integer.valueOf(request.getParameter("leavesNoPay")).equals(null)||
                 Integer.valueOf(request.getParameter("leavesMedical")).equals(null)||
                 Float.valueOf(request.getParameter("bSalary")).equals(null) ||
-                Float.valueOf(request.getParameter("otRate")).equals(null)){
+                Float.valueOf(request.getParameter("otRate")).equals(null) || isValidBDay>0 ){
 
             String  result="Unsuccessful";
             request.setAttribute("result",result);
