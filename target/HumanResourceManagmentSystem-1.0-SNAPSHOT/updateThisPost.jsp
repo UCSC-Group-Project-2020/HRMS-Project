@@ -28,6 +28,11 @@
         <input type="text" name="imgId" readonly hidden/>
         <div class="left" id="m">
             <table id="post_table">
+                <%HttpSession sss = request.getSession(false);
+                    if (sss == null || sss.isNew()) {
+                        request.setAttribute("session", "Expired");
+                        request.getRequestDispatcher("/login.jsp").forward(request, response);
+                    }%>
                 <%
                     String pId = request.getParameter("post");
                     ResultSet rs= null;

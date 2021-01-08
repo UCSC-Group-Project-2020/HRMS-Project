@@ -23,6 +23,11 @@
         <h3>Remove Employee</h3>
     </div>
     <form action="removeEmployee" method="POST">
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
         <input class="input" type="number" name="LoginId" value="<%=session.getAttribute("empId")%>" hidden>
         <%
             String result= (String) request.getAttribute("result");

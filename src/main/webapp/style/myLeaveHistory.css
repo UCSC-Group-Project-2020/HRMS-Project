@@ -11,17 +11,7 @@
     overflow-y: auto ;
     background-image: linear-gradient(to right, #0c3b60, #0c3b60, #041d3c, #000);
 }
-.typeInput,.statusInput{
-    position: relative;
-float: right;
-    height: 30px;
-    border-radius: 6px;
-width: 100%;
-    align-items: center;
-    font-family: "Roboto", sans-serif;
-    color: #000;
-    padding-left: 10px;
-}
+
 .type{
     position: relative;
 
@@ -113,10 +103,11 @@ width: 100%;
     color: white;
     font-family: "Roboto", sans-serif;
 }
-.input{
+.input,select{
     position: relative;
     float: right;
     line-height: 25px;
+    height: 25px;
     border-radius: 6px;
     width: 100%;
     font-size: 14px;

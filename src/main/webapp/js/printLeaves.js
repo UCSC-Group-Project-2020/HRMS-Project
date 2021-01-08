@@ -1,4 +1,4 @@
-function toPDF() {
+function leavestoPDF() {
 
     const  rowCount = document.getElementById("myTable").rows.length;
     const row = document.getElementById("myTable").rows[0].cells.length;
@@ -40,8 +40,7 @@ function toPDF() {
                 id: keys[i],
                 name: keys[i],
                 prompt: keys[i],
-                width: 40,
-
+                width: 42.2,
                 top:5,
                 align: "center",
                 padding: 0
@@ -78,25 +77,26 @@ function toPDF() {
     var y =date.getFullYear();
 
     doc.setLineWidth(0.5);
-    doc.line(15, 42, 285, 42);
+    doc.line(6, 42, 291, 42);
+
 
     doc.setFontSize(14);
-    doc.text("Date  "+y+" - "+m+" - "+d,15,50);
+    doc.text("Date  "+y+"-"+m+1+"-"+d,10,50);
 
     var detail = document.getElementById("result").rows[0].cells.item(0).innerHTML;
 
     doc.setFontSize(14);
-    doc.text(detail,50,45);
+    doc.text(detail,40,45);
 
     doc.setFontSize(14);
-    doc.text(rowCount+" Records ",255,50);
+    doc.text(rowCount+" Records ",262,50);
 
     doc.setLineWidth(0.5);
-    doc.line(15, 55, 285, 55);
+    doc.line(6, 55, 291, 55);
 
     doc.setFontSize(20);
     doc.setTextColor("#000");
-    doc.table(15,60, generateData(rowCount), headers);
+    doc.table(6,60, generateData(rowCount), headers);
     doc.save("HRMS_Staff_Leaves");
 
 }

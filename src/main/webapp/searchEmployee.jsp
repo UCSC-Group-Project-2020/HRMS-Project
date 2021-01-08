@@ -23,6 +23,11 @@
         <h3>Update Employee</h3>
     </div>
     <form action="searchemployee" method="POST">
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
         <%
             String result= (String) request.getAttribute("result");
             if(result != null){

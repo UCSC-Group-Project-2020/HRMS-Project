@@ -1,7 +1,5 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="DBconnection.DBconn" %>
-<%@ page import="java.sql.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="leave.LeaveBean" %>
 <%@ page import="leave.LeaveDao" %>
@@ -21,6 +19,11 @@
     </div>
     <br>
     <form action="searchMyLeaves" method="POST">
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
         <input class="input" type="number" name="empId" value="<%=session.getAttribute("empId")%>" hidden>
     <div class="selection">
         <table>

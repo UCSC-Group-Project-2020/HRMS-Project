@@ -25,6 +25,11 @@
         <h3>Add Complain/Suggestions</h3>
     </div>
     <form action="addComplain" method="POST">
+            <%HttpSession sss = request.getSession(false);
+        if (sss == null || sss.isNew()) {
+            request.setAttribute("session", "Expired");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }%>
             <%
         String result= (String) request.getAttribute("result");
 
@@ -51,7 +56,7 @@
         <table class="data">
             <tr>
                 <td>
-                    <label class="label" hidden>Complain/Suggestions Id</label>
+                    <label class="label">Complain/Suggestions Id</label>
                 </td>
                 <%
                     ResultSet rs2= null;
@@ -63,7 +68,7 @@
                         if (rs2.next()) {%>
 
                 <th>
-                    <input hidden class="input" type="text" name="comId" id="comId" value="<%=rs2.getInt("ID")+1%>" readonly>
+                    <input class="input" type="text" name="comId" id="comId" value="<%=rs2.getInt("ID")+1%>" readonly>
                 </th>
 
             </tr>

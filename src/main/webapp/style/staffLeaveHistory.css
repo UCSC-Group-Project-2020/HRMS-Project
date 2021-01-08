@@ -48,17 +48,6 @@
     border-bottom: 1px solid white;
 }
 
-.typeInput,.statusInput{
-    position: relative;
-    float: right;
-    height: 30px;
-    border-radius: 6px;
-    width: 100%;
-    align-items: center;
-    font-family: "Roboto", sans-serif;
-    color: #000;
-    padding-left: 10px;
-}
 .searchResults{
     color: dodgerblue;
     font-family: "Roboto", sans-serif;
@@ -126,10 +115,11 @@
     color: white;
     font-family: "Roboto", sans-serif;
 }
-.input{
+.input,select{
     position: relative;
     float: right;
     line-height: 25px;
+    height: 25px;
     border-radius: 6px;
     width: 100%;
     font-size: 14px;
@@ -137,8 +127,6 @@
     color: #000;
     padding-left: 10px;
 }
-
-
 .send{
 
     padding: 5px;

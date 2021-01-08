@@ -3,10 +3,10 @@ package leave;
 public class LeaveBean {
     private  String empId,leaveId, toDate, senderId,fromDate,appDate,reason,status,empIdNotification;
 
-    private int totPayedLeaves, remPayedLeaves ,tackenPayedLeaves;
+    private int totPayedLeaves  ,tackenPayedLeaves;
     private int totNoPayedLeaves, remNoPayedLeaves,tackenNoPayLeaves;
     private int totMedicalLeaves, remMedicalLeaves ,tackenMedicalLeaves;
-
+float remPayedLeaves;
     private String firstName,lName,NIC,type;
 
     public String getFName()
@@ -137,11 +137,11 @@ public class LeaveBean {
         this.totMedicalLeaves = totMedicalLeaves;
     }
 
-    public int getremPayedLeaves()
+    public float getremPayedLeaves()
     {
         return remPayedLeaves;
     }
-    public void setremPayedLeaves(int remPayedLeaves)
+    public void setremPayedLeaves(float remPayedLeaves)
     {
         this.remPayedLeaves = remPayedLeaves;
     }

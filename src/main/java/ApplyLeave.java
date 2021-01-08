@@ -7,12 +7,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ApplyLeave extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
         String empId,leaveId,authorizedPersonId,toDate,fromDate,appDate,reason,type;
-
-
 
         empId=request.getParameter("empId");
         leaveId=request.getParameter("leaveId");
@@ -24,14 +26,13 @@ public class ApplyLeave extends HttpServlet {
         type=request.getParameter("leavetype");
         System.out.println(type);
 
+
+
         if (reason.isEmpty() || authorizedPersonId.isEmpty() || toDate.isEmpty() || fromDate.isEmpty() || appDate.isEmpty()){
             String  result="Unsuccessful";
             request.setAttribute("result",result);
             request.getRequestDispatcher("/applyForLeave.jsp").forward(request, response);
         }else {
-
-
-
 
             LeaveBean newleave = new LeaveBean();
 
@@ -45,7 +46,12 @@ public class ApplyLeave extends HttpServlet {
             newleave.setType(type);
 
             LeaveDao appLeave = new LeaveDao();
-            String res = appLeave.addplyLeave(newleave);
+            String res = null;
+            try {
+                res = appLeave.addplyLeave(newleave);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             request.setAttribute("result", res);
 
             request.getRequestDispatcher("/applyForLeave.jsp").forward(request, response);

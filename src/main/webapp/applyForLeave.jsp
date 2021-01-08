@@ -21,7 +21,11 @@
     <div class="heading"><h3>Apply For Leave</h3>
     </div>
     <form action="applyLeave" method="POST">
-
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
     <%
         String result= (String) request.getAttribute("result");
 
@@ -30,16 +34,25 @@
         if(result=="Successful"){%>
                 <h4 class="response" style="color: #4bbe19;">
                     Your Leave is Successfully Send! , Response Will Be Notify Soon.
-                </h4><%
-
-        }request.setAttribute("result",null);
-    %>
-        <%
+                </h4>
+        <%}request.setAttribute("result",null);
          if(result == "Unsuccessful"){%>
                 <h4 class="response" style="color: #DC143C;">
                     Unable To Send Your Leave! , Try Again.
                 </h4>
-    <%} request.setAttribute("result",null);}
+        <%} request.setAttribute("result",null);
+            if(result == "RestInRange"){%>
+        <h4 class="response" style="color: #ef0000;">
+            You Can Not Apply Leaves In This Range,System Error!
+        </h4>
+        <%} request.setAttribute("result",null);
+            if(result == "Overlapped"){%>
+        <h4 class="response" style="color: #ef0000;">
+            You Have Approved Some Leaves In This Range.
+        </h4>
+        <%} request.setAttribute("result",null);
+
+    }
         request.setAttribute("result",null);
     %>
     <%

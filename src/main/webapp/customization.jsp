@@ -24,6 +24,11 @@
     </div>
     <br>
     <form action="addCustomizeData" method="POST">
+        <%HttpSession sss = request.getSession(false);
+            if (sss == null || sss.isNew()) {
+                request.setAttribute("session", "Expired");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }%>
         <input class="input" type="number" name="empId" value="<%=session.getAttribute("empId")%>" hidden>
 
         <div>
@@ -72,15 +77,15 @@
                 <th>
                     <div class="date">
                         <select name="fromMonth" id="fromMonth">
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">Auguest</option>
-                            <option value="9">September</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">Auguest</option>
+                            <option value="09">September</option>
                             <option value="10">October</option>
                             <option value="11">November</option>
                             <option value="12">December</option>

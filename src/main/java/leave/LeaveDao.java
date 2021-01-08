@@ -293,7 +293,6 @@ public class LeaveDao {
         if(fromDateS.isEmpty()){
             fromDateS="0000-01-01";
         }
-
         if(status==null && type==null && toDateS !=null && fromDateS!=null){
             if(toDateS.isEmpty()){
                 toDateS="9999-12-31";
@@ -301,7 +300,6 @@ public class LeaveDao {
             if(fromDateS.isEmpty()){
                 fromDateS="0000-01-01";
             }
-
             try
             {
                 con = DBconn.getConnection();
@@ -336,8 +334,7 @@ public class LeaveDao {
                     leave.setAuthorizedPersonId(authorizedPersonId);
 
                     leaveList.add(leave);
-                    PreparedStatement st3= con.prepareStatement("UPDATE notification SET leaveResponseFlag=?  " +
-                            "WHERE receiverId=?");
+                    PreparedStatement st3= con.prepareStatement("UPDATE notification SET leaveResponseFlag=? WHERE receiverId=?");
 
                     st3.setInt(1, 0);
                     st3.setString(2, empId);
@@ -591,7 +588,9 @@ public class LeaveDao {
         ResultSet rs = null;
 
         String fName,lName,reson,leaveId,fromDate,toDate,authorizedPersonId,type;
-        int remPayed,remNoPay,remMedical;
+        float remPayed;
+        int remNoPay;
+        int remMedical;
         try
         {
             con = DBconn.getConnection();
@@ -611,7 +610,7 @@ public class LeaveDao {
                 reson = rs.getString("reason");
                 type=rs.getString("LeaveType");
 
-                remPayed=rs.getInt("remainingPayedLeaves");
+                remPayed=rs.getFloat("remainingPayedLeaves");
                 remNoPay= rs.getInt("remainingNoPayLeaves");
                 remMedical=rs.getInt("remainingMedicalLeaves");
 
@@ -642,8 +641,6 @@ public class LeaveDao {
 
         return leaveRequestList;
     }
-
-
     public String approveOrRejectLeave(LeaveBean newLeave) {
         Connection con = null;
         Statement statement = null;
@@ -652,16 +649,17 @@ public class LeaveDao {
         String status,type=null, authorizedPersonId, leaveId, empId = null, res, fromDate = null, toDate = null, appDate = null;
         int totalLeaves = 0, remainingLeaves = 0, takenLeaves = 0;
 
-        int remPayed=0,remNoPay=0,remMedical=0;
-        int tackenPayed=0,tackenNoPay=0,tackenMedical=0;
-
-
+        int remNoPay=0,remMedical=0;
+        int tackenNoPay=0,tackenMedical=0;
+        float tackenPayed=0,remPayed=0;
+        float payedRemain=0,payedTacken=0;
+        int numberOfLeaves = 0;
         leaveId = newLeave.getLeaveId();
         status = newLeave.getstatus();
         authorizedPersonId = newLeave.getAuthorizedPersonId();
         //type=newLeave.getType();
 
-
+        int typeIsPay=0;
         try {
             con = DBconn.getConnection();
             statement = con.createStatement();
@@ -675,36 +673,29 @@ public class LeaveDao {
                 toDate = rs.getString("leaveTo");
                 appDate = rs.getString("appliedDate");
                 type=rs.getString("LeaveType");
-                System.out.println("*****************************************************************************Type = "+type);
 
-                remPayed=rs.getInt("remainingPayedLeaves");
+                remPayed=rs.getFloat("remainingPayedLeaves");
                 remNoPay= rs.getInt("remainingNoPayLeaves");
                 remMedical=rs.getInt("remainingMedicalLeaves");
 
-                tackenPayed=rs.getInt("takenPayedLeaves");
+                tackenPayed=rs.getFloat("takenPayedLeaves");
                 tackenNoPay= rs.getInt("tackenNoPayLeaves");
                 tackenMedical=rs.getInt("tackenMedicalLeaves");
 
                 if(type .equals("Payed") ){
-                    remainingLeaves=remPayed;
-                    takenLeaves=tackenPayed;
-                    System.out.println("Payed payed payed");
-                    System.out.println(" remainingLeaves ........." + remainingLeaves);
-                    System.out.println(" takenLeaves ..........." + takenLeaves);
+                    payedRemain=  remPayed;
+                    payedTacken= tackenPayed;
+                    typeIsPay=1;
+
                 }
                 else if(type.equals("NoPay") ){
                     remainingLeaves=remNoPay;
                     takenLeaves=tackenNoPay;
-                    System.out.println("Nopay Nopay Nopay");
-                    System.out.println(" remainingLeaves ............." + remainingLeaves);
-                    System.out.println(" takenLeaves ......." + takenLeaves);
+
                 }
-               else if(type .equals("Medical") ){
+                else if(type .equals("Medical") ){
                     remainingLeaves=remMedical;
                     takenLeaves=tackenMedical;
-                    System.out.println("Medical Medical Medical");
-                    System.out.println(" remainingLeaves ........" + remainingLeaves);
-                    System.out.println(" takenLeaves ................" + takenLeaves);
                 }
 
             }
@@ -716,128 +707,103 @@ public class LeaveDao {
 
         }
 
-
         if (0 >= remPayed || 0 >= remNoPay ||0 >= remMedical  ) {
-
             status = "0";
         }
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-            try {
+        try {
 
-                Date d1 = sdf.parse(fromDate);
-                Date d2 = sdf.parse(toDate);
-                Date d3 = sdf.parse(appDate);
+            Date start = sdf.parse(fromDate);
+            Date end = sdf.parse(toDate);
+            Date d3 = sdf.parse(appDate);
 
 
-                long diffOfAppandFrom = d3.getTime() - d1.getTime();
+            long diffOfAppandFrom = d3.getTime() - start.getTime();
 
-                Calendar c1 = Calendar.getInstance();
-                c1.setTime(d1);
+            numberOfLeaves = workingDays(start,end);;
 
-                int w1 = c1.get(Calendar.DAY_OF_WEEK);
-                c1.add(Calendar.DAY_OF_WEEK, -w1);
-
-                Calendar c2 = Calendar.getInstance();
-                c2.setTime(d2);
-
-                int w2 = c2.get(Calendar.DAY_OF_WEEK);
-                c2.add(Calendar.DAY_OF_WEEK, -w2);
-
-                long days = (c2.getTimeInMillis() - c1.getTimeInMillis()) / (1000 * 60 * 60 * 24);
-                long daysWithoutWeekendDays = days - (days * 2 / 7);
-                int numberOfLeaves = 0;
-                if (w1== Calendar.SATURDAY || w1==Calendar.SUNDAY){
-
-                    numberOfLeaves= -1;
-                    System.out.println("            numberOfLeaves = " + numberOfLeaves);
-                    System.out.println(w1);
-                    System.out.println(w2);
-                }
-                if (w1 == Calendar.SUNDAY && w2 != Calendar.SATURDAY) {
-                    w1 = Calendar.MONDAY;
-                } else if (w1 == Calendar.SATURDAY && w2 != Calendar.SUNDAY) {
-                    w1 = Calendar.FRIDAY;
+            if(typeIsPay==1){
+                if(numberOfLeaves>payedRemain){
+                    System.out.println("Payed");
+                    System.out.println(numberOfLeaves+">"+payedRemain);
+                    status="0";
                 }
 
-                if (w2 == Calendar.SUNDAY) {
-                    w2 = Calendar.MONDAY;
-                } else if (w2 == Calendar.SATURDAY) {
-                    w2 = Calendar.FRIDAY;
-                }
-
-                numberOfLeaves = numberOfLeaves +(int) (daysWithoutWeekendDays - w1 + w2)+1;
-
-                System.out.println("            numberOfLeaves = " + numberOfLeaves);
+            }else{
                 if(numberOfLeaves>remainingLeaves){
                     System.out.println(numberOfLeaves+">"+remainingLeaves);
                     status="0";
                 }
 
-                long diffOfAppandFromDay = (diffOfAppandFrom / (1000 * 60 * 60 * 24)) % 365;
-                if(status.equals("0")){
-                    //status is rejected
-                    System.out.println("status is rejected");
-                    numberOfLeaves = 0;
-                    remainingLeaves = remainingLeaves - numberOfLeaves;
-                    takenLeaves = numberOfLeaves + takenLeaves;
+            }
 
-                }
-                else if (diffOfAppandFromDay > 0) {
-                    //Applied Date > From Date
-                    System.out.println("        Applied Date > From Date");
-                    numberOfLeaves = 0;
-                    remainingLeaves = remainingLeaves - numberOfLeaves;
-                    takenLeaves = numberOfLeaves + takenLeaves;
-                    status = "0";
-                } else if (numberOfLeaves < 0) {
-                    //From Date > To Date
-                    System.out.println("        From Date > To Date");
-                    numberOfLeaves = 0;
-                    remainingLeaves = remainingLeaves - numberOfLeaves;
-                    takenLeaves = numberOfLeaves + takenLeaves;
-                    status = "0";
-                } else {
+            long diffOfAppandFromDay = (diffOfAppandFrom / (1000 * 60 * 60 * 24)) % 365;
+            if(status.equals("0")){
+                //status is rejected
+                System.out.println("status is rejected");
+                numberOfLeaves = 0;
+                remainingLeaves = remainingLeaves - numberOfLeaves;
+                takenLeaves = numberOfLeaves + takenLeaves;
+
+            }
+            else if (diffOfAppandFromDay > 0) {
+                //Applied Date > From Date
+                System.out.println("        Applied Date > From Date");
+                numberOfLeaves = 0;
+                remainingLeaves = remainingLeaves - numberOfLeaves;
+                takenLeaves = numberOfLeaves + takenLeaves;
+                status = "0";
+            } else if (numberOfLeaves < 0) {
+                //From Date > To Date
+                System.out.println("        From Date > To Date");
+                numberOfLeaves = 0;
+                remainingLeaves = remainingLeaves - numberOfLeaves;
+                takenLeaves = numberOfLeaves + takenLeaves;
+                status = "0";
+            } else {
+                if(typeIsPay==1){
+                    System.out.println("Payed");
+                    System.out.println(" remainingLeaves = " + payedRemain);
+                    System.out.println(" takenLeaves = " + numberOfLeaves);
+                    payedRemain = payedRemain - numberOfLeaves;
+                    payedTacken = numberOfLeaves + payedTacken;
+
+                }else{
                     System.out.println(" remainingLeaves = " + remainingLeaves);
                     System.out.println(" takenLeaves = " + numberOfLeaves);
                     remainingLeaves = remainingLeaves - numberOfLeaves;
                     takenLeaves = numberOfLeaves + takenLeaves;
+
                 }
 
-            System.out.println("            numberOfLeaves ==" + numberOfLeaves);
-            System.out.println("            remainingLeaves ==" + remainingLeaves);
-            System.out.println("            takenLeaves ==" + numberOfLeaves);
+            }
 
         }catch(ParseException e){
             e.printStackTrace();
         }
-        System.out.println("Remaining  = "+remPayed+ " , "+remNoPay+ " , " +remMedical);
-        System.out.println("Tacken  = "+tackenPayed+ " , "+tackenNoPay+ " , " +tackenMedical);
         if(type .equals("Payed") ){
-            remPayed=remainingLeaves;
-            tackenPayed=takenLeaves;
-            System.out.println("Payed ============================= payed");
+            remPayed=payedRemain;
+            tackenPayed=payedTacken;
         }else if(type.equals("NoPay") ){
             remNoPay=remainingLeaves;
             tackenNoPay=takenLeaves;
-            System.out.println("NoPay ========================= Nopay");
         }else if(type .equals("Medical") ){
             remMedical=remainingLeaves;
             tackenMedical=takenLeaves;
-            System.out.println("Medical ============================ Medical");
         }
-        System.out.println("Remaining  = "+remPayed+ " , "+remNoPay+ " , " +remMedical);
-        System.out.println("Tacken  = "+tackenPayed+ " , "+tackenNoPay+ " , " +tackenMedical);
+
         try {
             con = DBconn.getConnection();
-            PreparedStatement st1 = con.prepareStatement("update leavedetails set status=?  where leaveId=" + leaveId);
+            PreparedStatement st1 = con.prepareStatement("update leavedetails set status=? ,affectedLeaveCount=? where leaveId=" + leaveId);
             st1.setInt(1, Integer.parseInt(status));
+            st1.setInt(2,numberOfLeaves);
             st1.executeUpdate();
 
             PreparedStatement st2 = con.prepareStatement("UPDATE employeeleavedetails SET remainingPayedLeaves=? , takenPayedLeaves=? , remainingNoPayLeaves=? , tackenNoPayLeaves=? , remainingMedicalLeaves=? , tackenMedicalLeaves=? WHERE empId=?");
-            st2.setInt(1,remPayed);
-            st2.setInt(2,tackenPayed);
+            st2.setFloat(1,remPayed);
+            st2.setFloat(2,tackenPayed);
             st2.setInt(3, remNoPay);
             st2.setInt(4,tackenNoPay);
             st2.setInt(5,remMedical);
@@ -852,9 +818,9 @@ public class LeaveDao {
 
 
         }catch (SQLException throwables) {
-                throwables.printStackTrace();
-                res ="UnSuccessful";
-            }
+            throwables.printStackTrace();
+            res ="UnSuccessful";
+        }
 
         try {
             con = DBconn.getConnection();
@@ -883,16 +849,15 @@ public class LeaveDao {
         }
         return res;
     }
-    public String addplyLeave(LeaveBean newLeave) {
+    public String addplyLeave(LeaveBean newLeave) throws ParseException {
         Connection con = null;
         Statement statement = null;
         ResultSet rs = null;
 
         String toDate,res, authorizedPersonId, fromDate, appDate,reason,empId,leaveId,type;
 
-
-          empId = newLeave.getEmpId();
-         leaveId = newLeave.getLeaveId();
+        empId = newLeave.getEmpId();
+        leaveId = newLeave.getLeaveId();
 
         toDate = newLeave.gettoDate();
         fromDate = newLeave.getfromDate();
@@ -904,38 +869,120 @@ public class LeaveDao {
 
         try {
             con = DBconn.getConnection();
-            PreparedStatement st1 = con.prepareStatement("INSERT INTO leavedetails VALUES(?,?,?,?,?,?,?,?,?)");
+            statement = con.createStatement();
+            String resetDate = null;
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+            String currentYear= formatter.format(date);
+            SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+
+            Date startDate=new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+            Date endDate=new SimpleDateFormat("yyyy-MM-dd").parse(toDate);
+            ResultSet customize = statement.executeQuery("SELECT * FROM `customizeddata` ORDER BY`ID` DESC");
+            if(customize.next()){
+                resetDate= customize.getString("resetDate");
+                resetDate=currentYear+"-"+resetDate;
+                System.out.println(resetDate);
+                Date reset=new SimpleDateFormat("yyyy-MM-dd").parse(resetDate);
+                if ((reset.after(startDate) && reset.before(endDate)) || reset.equals(startDate) || reset.equals(endDate)){
+                    System.out.println("RestInRange");
+                    return "RestInRange";
+                }
+            }
+            System.out.println("select * from leavedetails where status=2 and empId ="+empId+"  and leaveFrom < '"+toDate+"' and leaveTo > '"+fromDate+"'");
+            rs = statement.executeQuery("select * from leavedetails where status=2 and empId ="+empId+"  and leaveFrom < '"+toDate+"' and leaveTo > '"+fromDate+"'");
+            if (rs.next()){
+                System.out.println("Overlapped");
+                return "Overlapped";
+            }else{
+
+                PreparedStatement st1 = con.prepareStatement("INSERT INTO leavedetails VALUES(?,?,?,?,?,?,?,?,?,?)");
 
 
-            st1.setString(1, leaveId);
-            st1.setString(2, empId);
-            st1.setString(3, appDate);
-            st1.setString(4,fromDate);
-            st1.setString(5, toDate);
-            st1.setString(6, reason);
-            st1.setInt(7, 1);
+                st1.setString(1, leaveId);
+                st1.setString(2, empId);
+                st1.setString(3, appDate);
+                st1.setString(4,fromDate);
+                st1.setString(5, toDate);
+                st1.setFloat(6, 0);
+                st1.setString(7, reason);
+                st1.setInt(8, 1);
 
-            //0-rejected
-            //1-pending
-            //2-approve
-            st1.setString(8, type);
-            st1.setString(9, authorizedPersonId);
+                //0-rejected
+                //1-pending
+                //2-approve
+                st1.setString(9, type);
+                st1.setString(10, authorizedPersonId);
 
-            st1.executeUpdate();
-            PreparedStatement st3= con.prepareStatement("UPDATE notification SET leaveFlag=?  " +
-                    "WHERE receiverId=?");
+                st1.executeUpdate();
+                PreparedStatement st3= con.prepareStatement("UPDATE notification SET leaveFlag=?  " +
+                        "WHERE receiverId=?");
 
-            st3.setInt(1, 1);
-            st3.setString(2, authorizedPersonId);
+                st3.setInt(1, 1);
+                st3.setString(2, authorizedPersonId);
 
-            st3.executeUpdate();
+                st3.executeUpdate();
 
-            res ="Successful";
+                res ="Successful";
 
-        } catch (SQLException throwables) {
+            }} catch (SQLException throwables) {
             throwables.printStackTrace();
             res ="Unsuccessful";
         }
         return res;
+    }
+    static int workingDays(Date start, Date end) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String from=formatter.format(start);
+        String to=formatter.format(end);;
+        int workingDays=0;
+        Calendar c2 = Calendar.getInstance();
+        if(from.equals(to)){
+
+            c2.setTime(formatter.parse(from));
+            int dayOfWeek2 = c2.get(Calendar.DAY_OF_WEEK);
+            if(dayOfWeek2!=1 && dayOfWeek2 !=7){
+                workingDays=workingDays+1;
+            }
+
+
+        }else{
+
+            while(!from.equals(to)){
+
+                Calendar c = Calendar.getInstance();
+                c.setTime(start);
+                int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
+                if(dayOfWeek!=1 && dayOfWeek !=7){
+                    workingDays=workingDays+1;
+                }
+
+                String nextDate = "";
+
+                Calendar today = Calendar.getInstance();
+                String salaryDate= formatter.format( start);
+
+                Date next = formatter.parse(salaryDate);
+                today.setTime(next);
+                today.add(Calendar.DAY_OF_YEAR, 1);
+                nextDate = formatter.format(today.getTime());
+
+                start=formatter.parse(nextDate);
+
+                if(nextDate.equals(to)){
+
+                    c2.setTime(formatter.parse(nextDate));
+                    int dayOfWeek2 = c2.get(Calendar.DAY_OF_WEEK);
+
+                    if(dayOfWeek2!=1 && dayOfWeek2 !=7){
+                        workingDays=workingDays+1;
+                    }
+                    break;
+                }
+            }
+        }
+        System.out.println(workingDays  + "-- workingDays ");
+        return  workingDays;
     }
 }
