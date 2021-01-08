@@ -181,12 +181,12 @@ public class MessagesDao
         return status;
     }
 
-    public void delMessageEveryone(int msgId)
+    public void delMessageEveryone(String mId)
     {
         Connection con = null;
         Statement statement = null;
         ResultSet rs = null;
-
+        int msgId = Integer.parseInt(mId);
         try
         {
             con = DBconn.getConnection();

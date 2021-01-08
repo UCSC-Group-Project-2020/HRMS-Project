@@ -13,18 +13,13 @@ import java.sql.*;
 public class DownloadFile extends HttpServlet
 {
     private static final int BUFFER_SIZE = 4096;
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         int msgId;
         String guestId,guestName;
         msgId = Integer.parseInt(request.getParameter("msgFileId"));
         guestId = request.getParameter("gId");
         guestName = request.getParameter("gName");
-
-        //msgId = 32;
-        System.out.println(msgId);
-        System.out.println(guestId);
-        System.out.println(guestName);
 
         Connection conn = null;
 
@@ -97,7 +92,10 @@ public class DownloadFile extends HttpServlet
                     ex.printStackTrace();
                 }
             }
+            request.setAttribute("guestId",guestId);
+            request.setAttribute("guestName",guestName);
+            request.setAttribute("fId",0);
+            request.getRequestDispatcher("/chatSystem.jsp").forward(request, response);
         }
-        //request.getRequestDispatcher("/chatmessages").forward(request, response);
     }
 }

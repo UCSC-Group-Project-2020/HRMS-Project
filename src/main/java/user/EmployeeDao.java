@@ -276,13 +276,14 @@ public class EmployeeDao
         }
         return empList;
     }
-    public List<UserBean> searchChatEmployees()
+    public List<UserBean> searchChatEmployees(Object uId)
     {
         List<UserBean> empList = new ArrayList<UserBean>();
 
         Connection con = null;
         Statement statement = null;
-        ResultSet rs = null;
+        ResultSet rs1 = null;
+        ResultSet rs2 = null;
 
         String empId,fName,lName;
 
@@ -290,13 +291,28 @@ public class EmployeeDao
         {
             con = DBconn.getConnection();
             statement = con.createStatement();
-            rs = statement.executeQuery("SELECT user.empId,user.firstName,user.lastName FROM user INNER JOIN userprivilege ON user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1");
-            while(rs.next())
+            //rs = statement.executeQuery("SELECT user.empId,user.firstName,user.lastName FROM user INNER JOIN userprivilege ON user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1");
+            rs1 = statement.executeQuery("SELECT user.empId, user.firstName, user.lastName FROM user INNER JOIN chat ON user.empId = chat.receiverId OR user.empId = chat.senderId WHERE (chat.senderId = '"+uId+"' && chat.msgId = (SELECT MAX(chat.msgId) FROM chat WHERE senderId = '"+uId+"' && receiverId = user.empId)) OR (chat.receiverId = '"+uId+"' && chat.msgId = (SELECT MAX(chat.msgId) FROM chat WHERE receiverId = '"+uId+"' && senderId = user.empId)) GROUP BY user.empId ORDER BY MAX(chat.msgId) DESC");
+            while(rs1.next())
             {
                 UserBean employee = new UserBean();
-                empId = rs.getString("empId");
-                fName = rs.getString("firstName");
-                lName = rs.getString("lastName");
+                empId = rs1.getString("user.empId");
+                fName = rs1.getString("user.firstName");
+                lName = rs1.getString("user.lastName");
+
+                employee.setEmpId(empId);
+                employee.setFName(fName);
+                employee.setLName(lName);
+
+                empList.add(employee);
+            }
+            rs2 = statement.executeQuery("SELECT user.empId, user.firstName, user.lastName FROM user INNER join userprivilege on user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1 AND (user.empId NOT IN (SELECT chat.receiverId FROM chat) OR user.empId NOT IN (SELECT chat.receiverId FROM chat))");
+            while(rs2.next())
+            {
+                UserBean employee = new UserBean();
+                empId = rs2.getString("user.empId");
+                fName = rs2.getString("user.firstName");
+                lName = rs2.getString("user.lastName");
 
                 employee.setEmpId(empId);
                 employee.setFName(fName);

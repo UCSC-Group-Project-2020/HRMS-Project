@@ -232,4 +232,12 @@
         <servlet-name>DownloadFile</servlet-name>
         <url-pattern>/downloadfile</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteMessage</servlet-name>
+        <servlet-class>DeleteMessage </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteMessage</servlet-name>
+        <url-pattern>/deletemessage</url-pattern>
+    </servlet-mapping>
 </web-app>

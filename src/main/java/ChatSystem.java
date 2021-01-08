@@ -40,7 +40,7 @@ public class ChatSystem extends HttpServlet
             File = filePart.getInputStream();
         }
 
-        if(fId == 0 && (!msgText.equals("") || File != null))
+        if(fId == 0 && (!msgText.trim().equals("") || File != null))
         {
             MessagesBean newMsg = new MessagesBean();
             newMsg.setSenderId(myId);

@@ -16,9 +16,9 @@
 </head>
 
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="content">
-    <form id="chatSys" action="chatmessages" method="POST" enctype="multipart/form-data">
+    <form id="chatSys" action="" method="" enctype="multipart/form-data">
         <div class="heading">
             <h3>Chat Corner</h3>
         </div>
@@ -28,13 +28,13 @@
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }%>
         <div class="members">
+            <input type="text" class="input" name="empName" id="empName" placeholder="Search..." onkeyup="searchName()">
             <table id="tableNames" class="employees">
-                <tr></tr>
                 <%
                     Object myId = session.getAttribute("empId");
                     EmployeeDao empDao = new EmployeeDao();
                     MessagesDao msgDao = new MessagesDao();
-                    List<UserBean> empList = empDao.searchChatEmployees();
+                    List<UserBean> empList = empDao.searchChatEmployees(myId);
                     for(UserBean employee:empList){
                         if(session.getAttribute("empId").equals(employee.getEmpId())){}
                         else{
@@ -70,10 +70,10 @@
                     for(MessagesBean msg:msgList){
                         if(myId.equals(msg.getReceiverId())){
                 %>
-                <table style="width: 820px; ">
+                <table id="rTable" style="width: 820px; ">
                     <tr class="receivedRow">
                         <td class="received">
-                            <input type="submit" class="delete" name="Send" id="delete" value="X" style="float: right; color: red ;margin-right: 10px"><br>
+                            <input type="submit" class="delete" name="Send" id="<%=msg.getMsgId()%>" value="X" onclick="deleteMsg(this.id)" style="float: right; color: red ;margin-right: 10px"><br>
                             <%=msg.getMsgText()%><br>
                             <%if(msg.getMsgFileName()!=null){%>
                             <p id="<%=msg.getMsgId()%>" onclick="downloadFile(this.id)"><a href="#"><%=msg.getMsgFileName()%></a></p><br><%}%>
@@ -88,13 +88,13 @@
                 <%
                 }else{
                 %>
-                <table style="width: 820px; ">
+                <table id="sTable" style="width: 820px; ">
                     <tr class="sentRow">
                         <td>
 
                         </td>
                         <td class="sent">
-                            <input type="submit" class="delete" name="Send" id="delete1" value="X" style="float: right; color: red; margin-left:  10px"><br>
+                            <input type="submit" class="delete" name="Send" id="<%=msg.getMsgId()%>" value="X" onclick="deleteMsg(this.id)" style="float: right; color: red; margin-left:  10px"><br>
                             <%=msg.getMsgText()%><br>
                             <%if(msg.getMsgFileName()!=null){%>
                             <p id="<%=msg.getMsgId()%>" onclick="downloadFile(this.id)"><a href="#" ><%=msg.getMsgFileName()%></a></p><br><%}%>
@@ -109,7 +109,7 @@
             <div class="sendMsg">
                 <textarea id="msg" name="msg" class="input" cols="50" rows="3" placeholder="Type a Message"></textarea>
                 <input type="file" class="fileChoose" id="fbtn" name="fbtn" oninput="getFileName()">
-                <input type="submit" class="send" name="Send" id="btnSend" value="Send">
+                <input type="submit" class="send" name="Send" id="btnSend" value="Send" onclick="sendMsg()">
                 <input type="text" class="input" name="fileName" id="fileName" hidden readonly>
 
 
