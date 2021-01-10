@@ -59,7 +59,6 @@ public class ChatSystem extends HttpServlet
         msgDao.updateMsgSeenSt(guestId,myId);
         request.setAttribute("guestId",guestId);
         request.setAttribute("guestName",guestName);
-        request.setAttribute("fId",0);
         request.getRequestDispatcher("/chatSystem.jsp").forward(request, response);
 
 

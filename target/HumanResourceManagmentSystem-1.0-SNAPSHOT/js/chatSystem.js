@@ -1,5 +1,6 @@
 window.onload = function()
 {
+    document.getElementById("fId").value = "1";
     $("#chatMsg").scrollTop($("#chatMsg")[0].scrollHeight);
 }
 
@@ -15,16 +16,6 @@ function getFileName() {
         }
     }
 }
-
-/*$(document).ready(function(){
-    $("#msg").bind("change", function() {
-        if ($(this).val() == ""){
-            $("#btnSend").hidden = true;
-        } else {
-            $("#btnSend").hidden = false;
-        };
-    });
-});*/
 
 function downloadFile(mId)
 {
@@ -53,6 +44,7 @@ function deleteMsg(mId)
 
 function sendMsg()
 {
+    document.getElementById("fId").value = "0";
     document.getElementById('chatSys').action = "chatmessages";
     document.getElementById('chatSys').method = "POST"
     document.getElementById('chatSys').submit();

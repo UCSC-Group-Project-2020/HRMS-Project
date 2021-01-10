@@ -240,4 +240,12 @@
         <servlet-name>DeleteMessage</servlet-name>
         <url-pattern>/deletemessage</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ResetSystem</servlet-name>
+        <servlet-class>ResetSystem</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetSystem</servlet-name>
+        <url-pattern>/resetsystem</url-pattern>
+    </servlet-mapping>
 </web-app>

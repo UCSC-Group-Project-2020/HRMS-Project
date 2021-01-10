@@ -163,10 +163,14 @@ public class MessagesDao
                 if(delEmpId == null)
                 {
                     status[0] = "notDelete";
+                    status[3] = null;
+                }
+                else
+                {
+                    status[3] = delEmpId;
                 }
                 status[1] = senderId;
-                status[2] = receiverId;
-                status[3] = msgDateTime;
+                status[2] = msgDateTime;
             }
             con.close();
         }

@@ -306,7 +306,7 @@ public class EmployeeDao
 
                 empList.add(employee);
             }
-            rs2 = statement.executeQuery("SELECT user.empId, user.firstName, user.lastName FROM user INNER join userprivilege on user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1 AND (user.empId NOT IN (SELECT chat.receiverId FROM chat) OR user.empId NOT IN (SELECT chat.receiverId FROM chat))");
+            rs2 = statement.executeQuery("SELECT user.empId, user.firstName, user.lastName FROM user INNER join userprivilege on user.empId = userprivilege.empId WHERE userprivilege.chatSystem = 1 AND (user.empId NOT IN (SELECT chat.receiverId FROM chat WHERE chat.senderId = '"+uId+"') AND user.empId NOT IN (SELECT chat.senderId FROM chat WHERE chat.receiverId = '"+uId+"'))");
             while(rs2.next())
             {
                 UserBean employee = new UserBean();
@@ -328,6 +328,7 @@ public class EmployeeDao
         }
         return empList;
     }
+
     public String addEmployee(UserBean newEmp) {
         Connection con = null;
         Statement statement = null;

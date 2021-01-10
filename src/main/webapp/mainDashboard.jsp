@@ -1,51 +1,48 @@
-<%@ page import="DBconnection.DBconn" %>
-<%@ page import="java.sql.*" %>
+<%@ page import="notification.NotificationDao" %>
+<%@ page import="notification.NotificationBean" %>
+<%@ page import="Customize.CustomizeDao" %>
+<%@ page import="Customize.CustomizeBean" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div class="head">
+    <a href="login.jsp" class="Logout">Logout</a>
+    <%
+        Object logId = session.getAttribute("empId");
+
+        NotificationDao notificationSt = new NotificationDao();
+        NotificationBean nSt = notificationSt.getNotificationSt(logId);
+        int msgCount = notificationSt.updateChatNotificationSt(logId);
+
+    %>
+    <%if(session.getAttribute("chatSys").equals(1)) {%><a href="chatSystem.jsp" class="Msgs" aria-readonly="true"<%if(nSt.getChatN()==1){%>style="background-color: crimson"<%}%>><%if(msgCount==0){%>Messages<%}else {%>Messages (<%=msgCount%>)<%}%></a><%}%>
+    <%if(session.getAttribute("viewMySalary").equals(1)) {%><a href="mySalaryOverview.jsp" class="Salary"<%if(nSt.getSalaryN()==1){%>style="background-color: crimson" <%}%>>Calculated Salary</a><%}%>
+    <%if(session.getAttribute("decisionLeave").equals(1)) {%><a href="approveOrRejectLeave.jsp" class="Leave" <%if(nSt.getLeaveApplyN()==1){%> style="background-color: forestgreen"<%}%>>Leave Requests</a><%}%>
+    <%if(session.getAttribute("viewMyLeaves").equals(1)) {%><a href="myLeaveHistory.jsp" class="Leave" <%if(nSt.getLeaveResponseN()==1){%> style="background-color: forestgreen"<%}%> >Leave Response</a><%}%>
+    <%if(session.getAttribute("viewComSug").equals(1)) {%><a href="viewComplains.jsp" class="com" <%if(nSt.getComplainN()==1){%>style="background-color: forestgreen"<%}%>>Complain/Suggestion</a><%}%>
 
     <%
-        int msgCount=0;
-        try {
-        Connection con = DBconn.getConnection();
-        Statement statement = con.createStatement();
-        ResultSet rs, rsNotifi = null;
+        CustomizeDao com = new CustomizeDao();
+        CustomizeBean cb = com.getResetData();
 
-        PreparedStatement st2= con.prepareStatement("UPDATE notification SET messageFlag=?  WHERE receiverId = ?");
-        rs = statement.executeQuery("SELECT COUNT(seenSt) as unseen FROM chat WHERE receiverId = '"+session.getAttribute("empId")+"'  && seenSt = 0");
-        if (rs.next()){
-            msgCount=rs.getInt("unseen");
-        }
-        if (msgCount == 0){
-            st2.setInt(1, 0);
-            st2.setString(2, (String) session.getAttribute("empId"));
-            st2.executeUpdate();
-        }else if (msgCount !=0){
-            st2.setInt(1, 1);
-            st2.setString(2, (String) session.getAttribute("empId"));
-            st2.executeUpdate();
-        }
-        rsNotifi = statement.executeQuery("SELECT * FROM notification where receiverId ="+session.getAttribute("empId"));
+        int flag=cb.getflag();
+        String date=cb.getreset();
 
-        while (rsNotifi.next())
+        if (date == null || date.equals(null)){}
+        else if(date.equals("equal") ){
+            if(flag==0){%>
+    <form id="reset">
+        <a href="#" class="com" style="background-color: crimson" onclick="reset()" >Reset System Data</a>
+    </form>
+
+    <%}}else{}%>
+    <script>
+        function reset()
         {
-            int msgnotify=rsNotifi.getInt("messageFlag");
-            int leaveNotify=rsNotifi.getInt("leaveFlag");
-            int comNotify=rsNotifi.getInt("complainSuggestionFlag");
-            int salNotify=rsNotifi.getInt("salaryFlag");
-            int leaveResponse=rsNotifi.getInt("leaveResponseFlag");
-    %>
-    <a href="login.jsp" class="Logout">Logout</a>
-    <%if(session.getAttribute("chatSys").equals(1)) {%><a href="chatSystem.jsp" class="Msgs" aria-readonly="true"<%if(msgnotify==1){%>style="background-color: crimson"<%}%>><%if(msgCount==0){%>Messages<%}else {%>Messages (<%=msgCount%>)<%}%></a><%}%>
-    <%if(session.getAttribute("viewMySalary").equals(1)) {%><a href="mySalaryOverview.jsp" class="Salary"<%if(salNotify==1){%>style="background-color: crimson" <%}%>>Calculated Salary</a><%}%>
-    <%if(session.getAttribute("decisionLeave").equals(1)) {%><a href="approveOrRejectLeave.jsp" class="Leave" <%if(leaveNotify==1){%> style="background-color: forestgreen"<%}%>>Leave Requests</a><%}%>
-    <%if(session.getAttribute("viewMyLeaves").equals(1)) {%><a href="myLeaveHistory.jsp" class="Leave" <%if(leaveResponse==1){%> style="background-color: forestgreen"<%}%> >Leave Response</a><%}%>
-    <%if(session.getAttribute("viewComSug").equals(1)) {%><a href="viewComplains.jsp" class="com" <%if(comNotify==1){%>style="background-color: forestgreen"<%}%>>Complain/Suggestion</a><%}}
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e);
-        }%>
+            document.getElementById('reset').action = "resetsystem";
+            document.getElementById('reset').method = "POST"
+            document.getElementById('reset').submit();
+        }
+    </script>
 </div>
 <div class="main-menu">
     <img href="home.jsp" class="avater" src="img/avatar.svg" alt="">
@@ -54,7 +51,6 @@
 
     </h2>
     <nav class="menu">
-
 
         <ul class="main-nav-ul">
             <li>

@@ -28,8 +28,9 @@
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }%>
         <div class="members">
-            <input type="text" class="input" name="empName" id="empName" placeholder="Search..." onkeyup="searchName()">
+            <input type="text" class="empName" name="empName" id="empName" placeholder="Search..." onkeyup="searchName()">
             <table id="tableNames" class="employees">
+                <tr></tr>
                 <%
                     Object myId = session.getAttribute("empId");
                     EmployeeDao empDao = new EmployeeDao();
@@ -53,13 +54,14 @@
         <%
             String gId =  (String) request.getAttribute("guestId");
             String gName = (String) request.getAttribute("guestName");
+            String fId = (String) request.getAttribute("fId");
             if(gName==null){ gName = "Welcome To The System Chat Corner!!!";}
             List<MessagesBean> msgList = msgDao.getMessages(myId, gId);
         %>
             <input type="text" class="input" name="sId" id="sId" value="<%=myId%>" hidden readonly>
             <input type="text" class="input" name="gId" id="gId" value="<%=gId%>" hidden readonly>
             <input type="text" class="input" name="gName" id="gName" value="<%=gName%>" hidden readonly>
-            <input type="text" class="input" name="fId" id="fId" value="0" hidden readonly>
+            <input type="text" class="input" name="fId" id="fId" value="<%=fId%>" hidden readonly>
 
             <%if(gId!=null){%>
         <h3 name="gN" id="gN" class="name"><%=gName%></h3>
@@ -74,9 +76,9 @@
                     <tr class="receivedRow">
                         <td class="received">
                             <input type="submit" class="delete" name="Send" id="<%=msg.getMsgId()%>" value="X" onclick="deleteMsg(this.id)" style="float: right; color: red ;margin-right: 10px"><br>
-                            <%=msg.getMsgText()%><br>
+                            <%=msg.getMsgText()%>
                             <%if(msg.getMsgFileName()!=null){%>
-                            <p id="<%=msg.getMsgId()%>" onclick="downloadFile(this.id)"><a href="#"><%=msg.getMsgFileName()%></a></p><br><%}%>
+                            <p id="<%=msg.getMsgId()%>" onclick="downloadFile(this.id)"><a href="#"><%=msg.getMsgFileName()%></a></p><%}%>
                             <span style="float:right; color: grey"><%=msg.getMsgDateTime()%></span>
                         </td>
                         <td>
@@ -95,30 +97,26 @@
                         </td>
                         <td class="sent">
                             <input type="submit" class="delete" name="Send" id="<%=msg.getMsgId()%>" value="X" onclick="deleteMsg(this.id)" style="float: right; color: red; margin-left:  10px"><br>
-                            <%=msg.getMsgText()%><br>
+                            <%=msg.getMsgText()%>
                             <%if(msg.getMsgFileName()!=null){%>
-                            <p id="<%=msg.getMsgId()%>" onclick="downloadFile(this.id)"><a href="#" ><%=msg.getMsgFileName()%></a></p><br><%}%>
+                            <p id="<%=msg.getMsgId()%>" onclick="downloadFile(this.id)"><a href="#" ><%=msg.getMsgFileName()%></a></p><%}%>
                             <span style="float:right; color: grey"><%=msg.getMsgDateTime()%></span>
                         </td>
                     </tr>
-
                 </table>
                 <%}}%>
             </div>
             <input type="text" class="input" name="msgFileId" id="msgFileId" hidden readonly>
             <div class="sendMsg">
-                <textarea id="msg" name="msg" class="input" cols="50" rows="3" placeholder="Type a Message" onkeyup="trimMsg()"></textarea>
+                <textarea id="msg" name="msg" class="input" cols="50" rows="3" placeholder="Type a Message"></textarea>
                 <input type="file" class="fileChoose" id="fbtn" name="fbtn" oninput="getFileName()">
                 <input type="submit" class="send" name="Send" id="btnSend" value="Send" onclick="sendMsg()">
                 <input type="text" class="input" name="fileName" id="fileName" hidden readonly>
-
-
             </div>
         </div>
         <%}else{%>
         <div class="image">
-            <img class="noPostImg" src="img/chat.jfif" />
-
+            <img class="noChatImg" src="img/chat-office-img.jpg" />
         </div>
 
         <%}%>
