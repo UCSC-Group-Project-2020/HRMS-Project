@@ -1,3 +1,4 @@
+import Customize.CustomizeDao;
 import login.LoginBean;
 import login.LoginDao;
 import user.UserBean;
@@ -19,6 +20,8 @@ public class Login extends HttpServlet
     {
         String userName = request.getParameter("un");
         String password = request.getParameter("pass");
+        hashFunction h =new hashFunction();
+        password = h.toHash(password,userName);
 
         LoginBean loginBean = new LoginBean();
 
@@ -28,8 +31,6 @@ public class Login extends HttpServlet
         LoginDao loginDao = new LoginDao();
 
         String userValidate = loginDao.authenticateUser(loginBean);
-
-
 
 
         if (userValidate.equals("Successful"))

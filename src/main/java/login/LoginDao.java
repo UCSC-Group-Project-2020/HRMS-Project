@@ -36,6 +36,7 @@ public class LoginDao
                 if (userName.equals(userNameDB) && password.equals(passwordDB))
                 {
                     result = "Successful";
+
                     break;
                 }
             }
