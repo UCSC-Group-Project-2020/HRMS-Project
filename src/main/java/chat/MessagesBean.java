@@ -1,10 +1,12 @@
 package chat;
 
+import java.io.InputStream;
 import java.sql.*;
 
 public class MessagesBean
 {
-    private String msgId,senderId,receiverId,delEmpId,msgText,msgFileName,msgFile;
+    private String msgId,senderId,receiverId,delEmpId,msgText,msgFileName,msgDateTime;
+    private InputStream msgFile;
     //Blob msgFile;
 
     public String getMsgId()
@@ -56,12 +58,20 @@ public class MessagesBean
         this.msgFileName = msgFileName;
     }
 
-    public String getMsgFile()
+    public InputStream getMsgFile()
     {
         return msgFile;
     }
-    public void setMsgFile(String msgFile)
+    public void setMsgFile(InputStream msgFile)
     {
         this.msgFile = msgFile;
+    }
+
+    public String getMsgDateTime()
+    {
+        return msgDateTime;
+    }
+    public void setMsgDateTime(String msgDateTime) {
+        this.msgDateTime = msgDateTime;
     }
 }

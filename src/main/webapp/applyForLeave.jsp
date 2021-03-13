@@ -41,6 +41,11 @@
                     Unable To Send Your Leave! , Try Again.
                 </h4>
         <%} request.setAttribute("result",null);
+            if(result == "RestInRange"){%>
+        <h4 class="response" style="color: #ef0000;">
+            You Can Not Apply Leaves In This Range,System Error!
+        </h4>
+        <%} request.setAttribute("result",null);
             if(result == "Overlapped"){%>
         <h4 class="response" style="color: #ef0000;">
             You Have Approved Some Leaves In This Range.

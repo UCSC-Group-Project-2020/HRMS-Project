@@ -16,9 +16,9 @@
 </head>
 
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="content">
-    <form id="chatSys" action="chatmessages" method="POST">
+    <form id="chatSys" action="" method="" enctype="multipart/form-data">
         <div class="heading">
             <h3>Chat Corner</h3>
         </div>
@@ -27,40 +27,56 @@
                 request.setAttribute("session", "Expired");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }%>
-        <%
-            Object myId = session.getAttribute("empId");
-            String gId =  (String) request.getAttribute("guestId");
-            String gName = (String) request.getAttribute("guestName");
-            if(gName==null){ gName = "Welcome To The System Chat Corner!!!";}
-            MessagesDao msgDao = new MessagesDao();
-            List<MessagesBean> msgList = msgDao.getMessages(myId, gId);
-            %>
         <div class="members">
+            <input type="text" class="empName" name="empName" id="empName" placeholder="Search..." onkeyup="searchName()">
+
             <table id="tableNames" class="employees">
-                <tr></tr>
                 <%
+                    Object myId = session.getAttribute("empId");
                     EmployeeDao empDao = new EmployeeDao();
-                    List<UserBean> empList = empDao.searchChatEmployees();
+                    MessagesDao msgDao = new MessagesDao();
+                    List<UserBean> empList = empDao.searchChatEmployees(myId);
+                    List<UserBean> empList2 = empDao.searchChatEmployeesdef(myId);
+
                     for(UserBean employee:empList){
                         if(session.getAttribute("empId").equals(employee.getEmpId())){}
                         else{
+                            int unseenMsgCount = msgDao.getUnseenMsgCount(employee.getEmpId(),myId);
+                            System.out.println(unseenMsgCount +"  -  "+employee.getEmpId());
                 %>
+                <tr>
+
+                </tr>
+                <%if(unseenMsgCount > 0){%>
+                <tr class="memberRows" style="background-color: #555555 ">
+                    <td hidden><%=employee.getEmpId()%></td>
+                    <td class="name"><%=employee.getFName()%> <%=employee.getLName()%>  </td>
+                    <td class="count" align="right"> <%if(unseenMsgCount > 0){%><%=unseenMsgCount%> <%}%></td>
+
+                </tr>
+                <%}else{%>
                 <tr class="memberRows">
                     <td hidden><%=employee.getEmpId()%></td>
-                    <td class="name"><%=employee.getFName()%> <%=employee.getLName()%></td>
-                    <td class="count">5</td>
-                    
+                    <td class="name"><%=employee.getFName()%> <%=employee.getLName()%>  </td>
+                    <td class="count" align="right"> <%if(unseenMsgCount > 0){%><%=unseenMsgCount%> <%}%></td>
+
                 </tr>
-                <%}}%>
+                <%}}}%>
+
             </table>
         </div>
+        <%
+            String gId =  (String) request.getAttribute("guestId");
+            String gName = (String) request.getAttribute("guestName");
+            if(gName==null){ gName = "Welcome To The System Chat Corner!!!";}
+            List<MessagesBean> msgList = msgDao.getMessages(myId, gId);
+        %>
+        <input type="text" class="input" name="sId" id="sId" value="<%=myId%>" hidden readonly>
+        <input type="text" class="input" name="gId" id="gId" value="<%=gId%>" hidden readonly>
+        <input type="text" class="input" name="gName" id="gName" value="<%=gName%>" hidden readonly>
+        <input type="text" class="input" name="fId" id="fId" value="0" hidden readonly>
 
-            <input type="text" class="input" name="sId" id="sId" value="<%=myId%>" hidden readonly>
-            <input type="text" class="input" name="gId" id="gId" value="<%=gId%>" hidden readonly>
-            <input type="text" class="input" name="gName" id="gName" value="<%=gName%>" hidden readonly>
-            <input type="text" class="input" name="fId" id="fId" value="0" hidden readonly>
-
-            <%if(gId!=null){%>
+        <%if(gId!=null){%>
         <h3 name="gN" id="gN" class="name"><%=gName%></h3>
         <div class="chat">
 
@@ -69,42 +85,48 @@
                     for(MessagesBean msg:msgList){
                         if(myId.equals(msg.getReceiverId())){
                 %>
-                <table style="width: 820px; ">
+                <table id="rTable" style="width: 820px; ">
                     <tr class="receivedRow">
                         <td class="received">
-                            <%=msg.getMsgText()%>
-                            <input type="submit" class="delete" name="Send" id="delete" value="X"style="float: left; color: red ;margin-right: 10px">
-
+                            <input type="submit" class="delete" name="Send" id="<%=msg.getMsgId()%>" value="X" onclick="deleteMsg(this.id)" style="float: right; color: red ;margin-right: 10px">
+                            <%=msg.getMsgText()%><br>
+                            <%if(msg.getMsgFileName()!=null){%>
+                            <p id="<%=msg.getMsgId()%>" onclick="downloadFile(this.id)"><a href="#"><%=msg.getMsgFileName()%></a></p><%}%>
+                            <span style="float:right; color: black"><%=msg.getMsgDateTime()%></span>
                         </td>
                         <td>
+
                         </td>
                     </tr>
 
                 </table>
-
                 <%
                 }else{
                 %>
-                <table style="width: 820px; ">
+                <table id="sTable" style="width: 820px; ">
                     <tr class="sentRow">
                         <td>
 
                         </td>
                         <td class="sent">
-                            <input type="submit" class="delete" name="Send" id="delete1" value="X"style="float: right; color: red; margin-left:  10px">
-
-                            <%=msg.getMsgText()%>
+                            <input type="submit" class="delete" name="Send" id="<%=msg.getMsgId()%>" value="X" onclick="deleteMsg(this.id)" style="float: right; color: red; margin-left:  10px">
+                            <%=msg.getMsgText()%><br>
+                            <%if(msg.getMsgFileName()!=null){%>
+                            <p id="<%=msg.getMsgId()%>" onclick="downloadFile(this.id)"><a href="#" ><%=msg.getMsgFileName()%></a></p><%}%>
+                            <span style="float:right; color: black"><%=msg.getMsgDateTime()%></span>
                         </td>
                     </tr>
 
                 </table>
                 <%}}%>
             </div>
-
+            <input type="text" class="input" name="msgFileId" id="msgFileId" hidden readonly>
             <div class="sendMsg">
                 <textarea id="msg" name="msg" class="input" cols="50" rows="3" placeholder="Type a Message"></textarea>
-                <input type="submit" class="send" name="Send" id="btnSend" value="Send">
-                <input type="file" class="fileChoose" name="fbtn">
+                <input type="file" class="fileChoose" id="fbtn" name="fbtn" oninput="getFileName()">
+                <input type="submit" class="send" name="Send" id="btnSend" value="Send" onclick="sendMsg()">
+                <input type="text" class="input" name="fileName" id="fileName" hidden readonly>
+
 
             </div>
         </div>

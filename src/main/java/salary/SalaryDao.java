@@ -687,7 +687,6 @@ public class SalaryDao {
 
         return salaries;
     }
-
     public String resolveErrors(SalaryBean salary) throws ParseException{
         Connection con = null;
         Statement statement = null;
