@@ -266,6 +266,18 @@
             </table>
             <table>
                 <br>
+                <tr>
+                    <td>
+                        <br>
+                        <label class="label"><b>Set All Privileges</b></label>
+                    </td>
+                    <th>
+                        <input class="input" type="radio" name="allPrivileges" value="1">
+                    </th>
+                    <th>
+                        <input class="input" type="radio" name="allPrivileges" value="0" checked>
+                    </th>
+                </tr>
                 <label class="Basic">Employee</label>
 
                 <tr>

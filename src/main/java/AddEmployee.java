@@ -84,6 +84,7 @@ public class AddEmployee extends HttpServlet{
             basicSal = Float.valueOf(request.getParameter("bSalary"));
             otRate = Float.valueOf(request.getParameter("otRate"));
 
+
             empAddDB = Integer.valueOf(request.getParameter("employeeAdd"));
             empDelDB = Integer.valueOf(request.getParameter("employeeRemove"));
 
@@ -121,6 +122,17 @@ public class AddEmployee extends HttpServlet{
             viewAllSalaryDB = Integer.valueOf(request.getParameter("otherSalary"));
             genReportDB = Integer.valueOf(request.getParameter("generationReport"));
 
+            Integer allPrivileges = Integer.valueOf(request.getParameter("allPrivileges"));
+
+            if(allPrivileges == 1){
+                empAddDB=empDelDB=1;
+                postAddDB=postDelDB=postViewDB=chatSysDB=1;
+                applyLeaveDB=1;
+                decisionLeaveDB=salaryManageDB=customizeDataDB=editPersonalDetailsDB=1;
+                giveComSugDB=viewComSugDB=1;
+                viewAllAttendDB=viewAllLeavesDB=viewAllSalaryDB=1;
+                viewMyAttendDB=viewMyLeavesDB=viewMySalaryDB=genReportDB=1;
+            }
             UserBean newEmp = new UserBean();
 
             newEmp.setEmpId(empId);
