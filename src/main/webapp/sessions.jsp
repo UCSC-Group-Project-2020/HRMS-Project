@@ -1,4 +1,6 @@
-<%--
+<%@ page import="Customize.CustomizeDao" %><%--
+<%@ page import="Customize.CustomizeDao" %>
+<%@ page import="Customize.CustomizeBean" %>
   Created by IntelliJ IDEA.
   User: SupunN
   Date: 10/20/2020
@@ -55,7 +57,15 @@
     session.setAttribute("viewAllSalary",viewAllSalary);
     session.setAttribute("genReport",genReport);
 
+    CustomizeDao com = new CustomizeDao();
+    String res=com.checker();
 
+    if (res.equals("No")){
 %>
+        <jsp:forward page="customization.jsp"/>
+    <%}else{
+        com.setTheCustomFlgs();
 
-<jsp:forward page="home.jsp"/>
+    %>
+        <jsp:forward page="home.jsp"/>
+    <%}%>

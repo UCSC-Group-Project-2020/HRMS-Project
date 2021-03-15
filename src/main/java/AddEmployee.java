@@ -1,14 +1,12 @@
 import user.EmployeeDao;
 import user.UserBean;
+import hash.hashBean;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,8 +28,16 @@ public class AddEmployee extends HttpServlet{
         address = request.getParameter("address");
         contact = request.getParameter("phone");
         email = request.getParameter("email");
-        password = request.getParameter("password");
-        confirmPassword = request.getParameter("confirm_password");
+
+        String originalPass = request.getParameter("password");
+        hashFunction h =new hashFunction();
+
+        password = h.toHash(originalPass,empId);
+
+        String originalconfirmPassword = request.getParameter("confirm_password");
+        confirmPassword = h.toHash(originalconfirmPassword,empId);
+
+
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");
@@ -174,5 +180,48 @@ public class AddEmployee extends HttpServlet{
             }
         }
     }
+
+    String toHash(String password, String empId){
+        String hash = null;
+        int id = Integer.parseInt(empId);
+        int length = password.length();
+
+        char[] passs = new char[length];
+        int[] asc = new int[length];
+        int sum =0;
+        for (int i = 0; i < length; i++) {
+            passs[i] = password.charAt(i);
+            asc[i] = (int) passs[i];
+
+            if (asc[i]< 47){
+                asc[i] =99;
+            }
+            else if(asc[i] <=57){
+                asc[i]= asc[i]-48;
+            }
+
+            else if(asc[i] <=91){
+                asc[i]= asc[i]-64;
+            }
+
+            else if(asc[i] <=122){
+                asc[i]= asc[i]-96;
+            }else{
+                asc[i] =99;
+            }
+
+            sum =sum + asc[i];
+
+        }
+        int r=id % 1000;
+        int val = (id * r * sum * id * sum);
+        if(val < 0){
+            val = val *(-1);
+        }
+        hash = String.valueOf(val);
+
+        return hash;
+    }
+
     }
 

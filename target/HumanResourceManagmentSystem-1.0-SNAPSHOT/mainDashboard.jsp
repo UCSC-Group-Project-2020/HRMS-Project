@@ -1,11 +1,14 @@
 <%@ page import="DBconnection.DBconn" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="Customize.CustomizeDao" %>
+<%@ page import="Customize.CustomizeBean" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div class="head">
 
     <%
         int msgCount=0;
+
         try {
         Connection con = DBconn.getConnection();
         Statement statement = con.createStatement();
@@ -50,12 +53,36 @@
     <%if(session.getAttribute("viewMySalary").equals(1)) {%><a href="mySalaryOverview.jsp" class="Salary"<%if(salNotify==1){%>style="background-color: crimson" <%}%>>Calculated Salary</a><%}%>
     <%if(session.getAttribute("decisionLeave").equals(1)) {%><a href="approveOrRejectLeave.jsp" class="Leave" <%if(leaveNotify==1){%> style="background-color: forestgreen"<%}%>>Leave Requests</a><%}%>
     <%if(session.getAttribute("viewMyLeaves").equals(1)) {%><a href="myLeaveHistory.jsp" class="Leave" <%if(levResponce==1){%> style="background-color: forestgreen"<%}%> >Leave Response</a><%}%>
-    <%if(session.getAttribute("viewComSug").equals(1)) {%><a href="viewComplains.jsp" class="com" <%if(comNotify==1){%>style="background-color: forestgreen"<%}%>>Complain/Suggestion</a><%}}
+    <%if(session.getAttribute("viewComSug").equals(1)) {%><a href="viewComplains.jsp" class="com" <%if(comNotify==1){%> style="background-color: forestgreen"<%}%> >Complain/Suggestion</a><%}%>
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e);
-        }%>
+        <%
+            CustomizeDao com = new CustomizeDao();
+            CustomizeBean cb = com.getResetData();
+
+            int flag=cb.getflag();
+            String date1=cb.getreset();
+            
+            if (date1 == null || date1.equals(null)){}
+            else if(date1.equals("equal") ){
+                if(flag==0){%>
+                    <form id="reset">
+                        <a href="#" class="com" style="background-color: crimson" onclick="reset()" >Reset System Data</a>
+                    </form>
+
+            <%}}else{}%>
+            <%}
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println(e);
+                }%>
+    <script>
+        function reset()
+        {
+            document.getElementById('reset').action = "resetSystem";
+            document.getElementById('reset').method = "POST"
+            document.getElementById('reset').submit();
+        }
+    </script>
 </div>
 <div class="main-menu">
     <img href="home.jsp" class="avater" src="img/avatar.svg" alt="">

@@ -4,7 +4,7 @@ public class CustomizeBean{
 
     public String startTime;
     public String endTime;
-    public int salaryCalculation;
+    public int salaryCalculation,flag;
     public  String reset,empId,Date;
     public String getEmpId()
     {
@@ -54,6 +54,14 @@ public class CustomizeBean{
     public void setreset(String reset)
     {
         this.reset = reset;
+    }
+    public int getflag()
+    {
+        return flag;
+    }
+    public void setflag(int flag)
+    {
+        this.flag = flag;
     }
 
 }
